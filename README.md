@@ -32,7 +32,8 @@ GitHub repository > Settings :
 - General > Default branch : switch to dev instead of main
 - General > Pull requests :
 - Collaborators : add if any
-- Rules > Rulesets
+- Rules > Rulesets : define "no push on dev" ruleset
+- Secrets and variables >
 
 ## Configure project
 
