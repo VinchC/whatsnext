@@ -55,4 +55,12 @@ configure Prettier on a common model to avoid different formatting implementatio
 
 ## Configure production environment
 
+create dev mode with build:watch and start:watch scripts to avoid restaring server
+
 create Makefile to add shortened scripts
+
+Server Express :
+
+- npm i express
+- npm i @types/express
+- index.ts => import express from "express" / const app = express() / const port = / app.get("/", (req, res) => { res.send('................');}); / app.listen(port, () => { console.log(`Server is listening on port ${port}`);});
