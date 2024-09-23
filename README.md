@@ -6,22 +6,28 @@ npm create vite@latest project_name :
   then cd project_name
   then npm i
 
-npm i everytime the package.json file is updated and after each pull from remote dev branch
-
 npm install package_name to install a package
 npm audit to check the ability to use the package in a secure way
 
-## GitHub repository management
+Packages :
+
+- npm i dotenv --save => zero-dependency module that loads environment variables from a .env file into process.env
+
+npm i everytime the package.json file is updated and after each pull from remote dev branch
+
+## Git and GitHub repository management
+
+create branch : git checkout -b branch_name
+
+delete branch : git branch -D branch_name
 
 push code on current remote branch on GitHub :
 
 - git add .
-- git commit -m "this is what I've done message"
+- git commit -m "text of the message"
 - git push --set-upstream origin branch_name
 
-git branch to get the list of all existing local branches
-
-git checkout -b branch_name to create a local branch
+git branch to display the list of all existing local branches
 
 creation of branch dev which will be used to merge pull requests
 
@@ -58,6 +64,8 @@ configure Prettier on a common model to avoid different formatting implementatio
 create dev mode with build:watch and start:watch scripts to avoid restaring server
 
 create Makefile to add shortened scripts
+
+create .env file to use secret environment variables (needs 'dotenv' package to use process.env.VARIABLE_NAME)
 
 Server Express :
 
