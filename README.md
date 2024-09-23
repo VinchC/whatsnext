@@ -55,6 +55,8 @@ configure Prettier on a common model to avoid different formatting implementatio
 
 ## Configure production environment
 
+create dev mode with build:watch and start:watch scripts to avoid restaring server
+
 create Makefile to add shortened scripts
 
 Server Express :
