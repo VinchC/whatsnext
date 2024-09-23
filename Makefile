@@ -1,2 +1,2 @@
 run :
-	npm run dev
+	npm i && npm audit && npm run dev
