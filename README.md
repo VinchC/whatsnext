@@ -23,17 +23,17 @@ git branch to get the list of all existing local branches
 
 git checkout -b branch_name to create a local branch
 
-creation of branch dev which will be used to merge pull request
+creation of branch dev which will be used to merge pull requests
 
 naming branches : US_XX/US_name/subtask_name (+ /fix)
 
 GitHub repository > Settings :
 
 - General > Default branch : switch to dev instead of main
-- General > Pull requests :
+- General > Pull requests : add if any
 - Collaborators : add if any
-- Rules > Rulesets : define "no push on dev" ruleset
-- Secrets and variables >
+- Rules > Rulesets : define "no push on dev and main" ruleset
+- Secrets and variables > add if any
 
 ## Configure project
 
@@ -49,8 +49,10 @@ npm run build to create/update dist folder which contains JavaScript files that 
 
 create index.ts file to check that the build (from ./src to ./dist) works correctly
 
-npm run start to execute the application via the main file defined in package.json
-
-- context : index.js
+npm run start to execute the application via the "main" entrypoint defined in package.json
 
 configure Prettier on a common model to avoid different formatting implementations
+
+## Configure production environment
+
+create Makefile to add shortened scripts
