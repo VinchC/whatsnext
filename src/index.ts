@@ -1,1 +1,5 @@
-console.log("Hello");
+function sayHello() {
+  return "Hello";
+}
+
+console.log(sayHello());
