@@ -1,12 +1,13 @@
-import express, { response } from "express";
-require("dotenv").config();
+import express, { response } from "express"; // allows to use Express as the server
+require("dotenv").config(); // allows to use .env file and its related private data
 
-import { lps } from "./lps";
+import { lps } from "./lps"; // import data from another file
 
-const app = express();
+const app = express(); // defines Express as the application server
 
 const port = process.env.REACT_APP_SERVER_PORT; // gets the port defined in a secret variable in the .env file
 
+// used to check that the server is working
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);
 });
@@ -15,60 +16,70 @@ app.use(express.json()); //allows implementation of the post route
 
 // a route should always start with a "/"...
 
+// access to home page
 app.get("/", (req, res) => {
   res.send("HELLO"); // the send function displays text on the page
 });
 
+// gets all items
 app.get("/lps", (req, res) => {
   res.json({ lps }); // adding or removing brackets change the data displayed, including the name of the variable as a data if present
 });
 
+// gets an item via its id
 app.get("/lps/:id", (req, res) => {
-  const id = parseInt(req.params.id); // gets the URL parameter related to the item in particular
+  const id = parseInt(req.params.id); // gets the URL parameter related to this item
   const lp = lps.find((lp) => lp.id === id); // gets the item which id is the same as the one in the URL
 
   // if item doesn't exist
   if (!lp) {
-    res.sendStatus(404);
+    res.sendStatus(404); // returns status code "Not found"
   }
 
   res.json({ lp });
 });
 
+// deletes an item via its id
 app.delete("/lps/:id", (req, res) => {
-  const id = parseInt(req.params.id); // gets the URL parameter related to the item in particular
-  const lpIndex = lps.findIndex((lp) => lp.id === id); // gets the index of an item which is the same as the one in the URL
+  const id = parseInt(req.params.id); // gets the URL parameter related to this item
+  const lpIndex = lps.findIndex((lp) => lp.id === id); // gets the index of an item which is the same as the parameter in the URL
 
   // if item with this index doesn't exist
   if (lpIndex === -1) {
-    res.sendStatus(404);
+    res.sendStatus(404); // returns status code "Not found"
   }
 
-  const lp = lps[lpIndex]; // gets the item which index corresponds to the params of the URL
+  const lp = lps[lpIndex]; // gets the item which index corresponds to the parameter of the URL
   lps.splice(lpIndex, 1); // removes 1 item starting at the index corresponding to the params of the URL
   res.json({ lp }); // returns the deleted item
 });
 
+// creates a new item
 app.post("/lps", (req, res) => {
-  const lp = req.body;
+  const lp = req.body; // gets the data sent by the client
 
-  lps.push(lp);
-  res.status(201).json({ lp });
+  lps.push(lp); // pushes the new data to this array
+
+  res.status(201).json({ lp }); // returns the item with status code
 });
 
+// updates an item via its id
 app.put("/lps/:id", (req, res) => {
-  const id = parseInt(req.params.id);
-  const lpIndex = lps.findIndex((lp) => lp.id === id);
+  const id = parseInt(req.params.id); // gets the URL parameter related to this item
+  const lpIndex = lps.findIndex((lp) => lp.id === id); // gets the index of an item which is the same as the parameter in the URL
 
+  // if item with this index doesn't exist
   if (lpIndex === -1) {
-    res.sendStatus(404);
+    res.sendStatus(404); // returns status code "Not found"
   }
 
-  const lp = lps[lpIndex];
-  const newData = req.body;
+  const lp = lps[lpIndex]; // gets the item which index corresponds to the parameter of the URL
+  const newData = req.body; // gets the new data sent by the client
 
-  const updatedData = { ...lp, ...newData };
-  lps.splice(lpIndex, 1, updatedData);
+  // The spread operator (...) allows us to accept a variable number of arguments and store them in an array
+  const updatedData = { ...lp, ...newData }; // updates the former data with the new ones (totally or partially, hence the ...)
 
-  res.status(204).json({ lp: updatedData });
+  lps.splice(lpIndex, 1, updatedData); // deletes the item at current index and replaces it with the updatedData
+
+  res.status(204).json({ lp: updatedData }); // returns the updated item with status code, linking the item via its id to the updated data
 });
