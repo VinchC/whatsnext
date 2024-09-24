@@ -1,11 +1,14 @@
 import express, { raw, response } from "express"; // allows to use Express as the server - whta is the point of raw and response ??
 require("dotenv").config(); // allows to use .env file and its related private data
+import { Database } from "sqlite3"; // allows to use sqlite3 database to manage queries
 
 import { lps } from "./lps"; // import data from another file
 
 const app = express(); // defines Express as the application server
 
 const port = process.env.REACT_APP_SERVER_PORT; // gets the port defined in a secret variable in the .env file
+
+const db = new Database("db.sqlite"); // defines a new sqlite database via its dedicated file
 
 // used to check that the server is working
 app.listen(port, () => {
@@ -23,7 +26,10 @@ app.get("/", (req, res) => {
 
 // gets all items
 app.get("/lps", (req, res) => {
-  res.json({ lps }); // adding or removing brackets change the data displayed, including the name of the variable as a data if present
+  db.all("SELECT * FROM lp;", (err, lps) => {
+    // get all items from database instead of importing them from a dedidated file
+    res.json({ lps });
+  }); // adding or removing brackets change the data displayed, including the name of the variable as a data if present
 });
 
 // gets an item via its id

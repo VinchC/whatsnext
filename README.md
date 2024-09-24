@@ -85,3 +85,5 @@ create connection to database via VSCode
 create db-queries folder with different files which are sqlite queries
 
 execute each file with the triangle in the upper right corner of VSCode
+
+npm i sqlite
