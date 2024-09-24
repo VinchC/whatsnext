@@ -1,0 +1,1 @@
+INSERT INTO lp (title, artist) VALUES ("a", "rr");

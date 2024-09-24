@@ -72,3 +72,16 @@ Server Express :
 - npm i express
 - npm i @types/express
 - index.ts => import express from "express" / const app = express() / const port = / app.get("/", (req, res) => { res.send('................');}); / app.listen(port, () => { console.log(`Server is listening on port ${port}`);});
+
+## Create database
+
+create sqlite database :
+
+- sqlite3 db.sqlite => gives access to sqlite in terminal and creates an empty db.sqlite file
+- sqlite > .databases => makes the db.sqlite file appear (!) in the root folder
+
+create connection to database via VSCode
+
+create db-queries folder with different files which are sqlite queries
+
+execute each file with the triangle in the upper right corner of VSCode
