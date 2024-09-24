@@ -79,7 +79,16 @@ app.put("/lps/:id", (req, res) => {
   const { id, ...newData } = rawData; // separates the id which is not updatable from the new data updated by the client
 
   // The spread operator (...) allows us to accept a variable number of arguments and store them in an array
-  const updatedLp = { ...lp, ...newData }; // updates the former data with the new ones (totally or partially, hence the spread operator ...)
+  const updatedLp = {
+    ...lp,
+    title: rawData.title || lp.title,
+    description: rawData.description ?? lp.description,
+    artist: rawData.artist || lp.artist,
+    release_year: rawData.release_year ?? lp.release_year,
+    picture: rawData.picture ?? lp.picture,
+    label: rawData.label ?? lp.label,
+    createdAt: rawData.createdAt ?? lp.createdAt,
+  }; // updates the former data with the new ones (some fields are mandatory || some fields can be emptied)
 
   lps.splice(lpIndex, 1, updatedLp); // deletes the item at current index and replaces it with the updatedData
 
