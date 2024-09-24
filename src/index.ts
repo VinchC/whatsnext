@@ -74,14 +74,14 @@ app.put("/lps/:id", (req, res) => {
   }
 
   const lp = lps[lpIndex]; // gets the item which index corresponds to the parameter of the URL
-  const rawData = req.body; // gets the new data sent by the client (except for the id which can't be updated)
+  const rawData = req.body; // gets the new data sent by the client (including the current id of the item)
 
-  const { id, ...newData } = rawData; // allows to get the impossible to modify id and new data from the client
+  const { id, ...newData } = rawData; // separates the id which is not updatable from the new data updated by the client
 
   // The spread operator (...) allows us to accept a variable number of arguments and store them in an array
-  const updatedData = { ...lp, ...newData }; // updates the former data with the new ones (totally or partially, hence the ...)
+  const updatedLp = { ...lp, ...newData }; // updates the former data with the new ones (totally or partially, hence the spread operator ...)
 
-  lps.splice(lpIndex, 1, updatedData); // deletes the item at current index and replaces it with the updatedData
+  lps.splice(lpIndex, 1, updatedLp); // deletes the item at current index and replaces it with the updatedData
 
-  res.status(204).json({ lp: updatedData }); // returns the updated item with status code, linking the item via its id to the updated data
+  res.status(204).json({ lp: updatedLp }); // returns the updated item with status code, linking the item via its id to the updated data
 });
