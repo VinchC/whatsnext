@@ -1,0 +1,14 @@
+PUT http://localhost:4000/lps/2
+Content-Type: application/json
+
+{
+    "id": 3,
+    "title": "aaaaaaaaaaaaaaaa",
+    "description": "",
+    "artist": "aaaaaaaaaaaa",
+    "release_year": "",
+    "picture":
+      "",
+    "label": "",
+    "createdAt": ""
+}
