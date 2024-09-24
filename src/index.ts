@@ -1,4 +1,4 @@
-import express, { response } from "express"; // allows to use Express as the server
+import express, { raw, response } from "express"; // allows to use Express as the server - whta is the point of raw and response ??
 require("dotenv").config(); // allows to use .env file and its related private data
 
 import { lps } from "./lps"; // import data from another file
@@ -65,8 +65,8 @@ app.post("/lps", (req, res) => {
 
 // updates an item via its id
 app.put("/lps/:id", (req, res) => {
-  const id = parseInt(req.params.id); // gets the URL parameter related to this item
-  const lpIndex = lps.findIndex((lp) => lp.id === id); // gets the index of an item which is the same as the parameter in the URL
+  const _id = parseInt(req.params.id); // gets the URL parameter related to this item - _id prevents the field id to be updated by the user
+  const lpIndex = lps.findIndex((lp) => lp.id === _id); // gets the index of an item which is the same as the parameter in the URL
 
   // if item with this index doesn't exist
   if (lpIndex === -1) {
@@ -74,7 +74,9 @@ app.put("/lps/:id", (req, res) => {
   }
 
   const lp = lps[lpIndex]; // gets the item which index corresponds to the parameter of the URL
-  const newData = req.body; // gets the new data sent by the client
+  const rawData = req.body; // gets the new data sent by the client (except for the id which can't be updated)
+
+  const { id, ...newData } = rawData; // allows to get the impossible to modify id and new data from the client
 
   // The spread operator (...) allows us to accept a variable number of arguments and store them in an array
   const updatedData = { ...lp, ...newData }; // updates the former data with the new ones (totally or partially, hence the ...)
