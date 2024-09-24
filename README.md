@@ -86,4 +86,6 @@ create db-queries folder with different files which are sqlite queries
 
 execute each file with the triangle in the upper right corner of VSCode
 
-npm i sqlite
+npm i sqlite3 to create an new object Database
+
+update the existing routes to use the SQL queries

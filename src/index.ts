@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 
 // gets all items
 app.get("/lps", (req, res) => {
-  db.all("SELECT * FROM lp;", (err, lps) => {
+  db.all("SELECT * FROM lp;", function (err, lps) {
     // get all items from database instead of importing them from a dedidated file
     res.json({ lps });
   }); // adding or removing brackets change the data displayed, including the name of the variable as a data if present
@@ -64,9 +64,34 @@ app.delete("/lps/:id", (req, res) => {
 app.post("/lps", (req, res) => {
   const lp = req.body; // gets the data sent by the client
 
-  lps.push(lp); // pushes the new data to this array
+  // enforce the non-nullable property of fields below
+  if (!lp.title) {
+    res.status(400).json({ error: "Title cannot be empty. " });
+  }
+  if (!lp.artist) {
+    res.status(400).json({ error: "Artist cannot be empty. " });
+  }
 
-  res.status(201).json({ lp }); // returns the item with status code
+  // pushes the new data to the database
+  db.run(
+    "INSERT INTO lp (title, description, artist, release_year, picture, label, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?);",
+    [
+      lp.title,
+      lp.description,
+      lp.artist,
+      lp.release_year,
+      lp.picture,
+      lp.label,
+      lp.createdAt,
+    ], // inserts into database the data sent by the client [ lp.xxx, ...] via a prepared statement ("INSERT ... ?)")
+    function (err) {
+      // if error occurs due to incomplete or incorrect data sent
+      if (err) {
+        res.status(400);
+      }
+      res.status(201).json({ id: this.lastID }); // returns the newly created item (corresponding to the last id added in db) with status code
+    }
+  );
 });
 
 // updates an item via its id

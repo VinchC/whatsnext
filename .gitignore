@@ -215,6 +215,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/node,linux,macos,windows
+# Ignore db.sqlite-journal in Git
+db.sqlite*
 
-db.sqlite
+# End of https://www.toptal.com/developers/gitignore/api/node,linux,macos,windows
