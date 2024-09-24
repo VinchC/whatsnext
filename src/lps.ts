@@ -18,7 +18,7 @@ export const lps = [
     release_year: 1993,
     picture:
       "https://en.wikipedia.org/wiki/Enter_the_Wu-Tang_(36_Chambers)#/media/File:Wu-TangClanEntertheWu-Tangalbumcover.jpg",
-    label: "NLoud",
+    label: "Loud",
     createdAt: "2024-09-23T22:55:14.755Z",
   },
 ];
