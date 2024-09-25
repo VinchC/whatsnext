@@ -34,15 +34,23 @@ app.get("/lps", (req, res) => {
 
 // gets an item via its id
 app.get("/lps/:id", (req, res) => {
-  const id = parseInt(req.params.id); // gets the URL parameter related to this item
-  const lp = lps.find((lp) => lp.id === id); // gets the item which id is the same as the one in the URL
+  const id = req.params.id; // gets the URL parameter related to this item
 
-  // if item doesn't exist
-  if (!lp) {
-    res.sendStatus(404); // returns status code "Not found"
-  }
+  db.get("SELECT * FROM lp WHERE id = ?;", [id], (err, lp) => {
+    // gets the specific lp via a prepared statement - returns the item or an error (err, lp)
 
-  res.json({ lp });
+    // if error
+    if (err) {
+      console.error(err.message); // displays error message
+      res.sendStatus(500); // code status Internal Server Error
+    }
+
+    if (lp) {
+      res.json({ lp }); // returns the item
+    } else {
+      res.sendStatus(400); // item doesn't exist
+    }
+  });
 });
 
 // deletes an item via its id
@@ -52,9 +60,8 @@ app.delete("/lps/:id", (req, res) => {
   // deletes the chosen item via a prepared statement taking id as a parameter
   db.run("DELETE FROM lp WHERE id=?;", [id], function (err) {
     if (err) {
-      console.error(err.message);
-      response.sendStatus(500);
-      return;
+      console.error(err.message); // displays error message in console
+      response.sendStatus(500); // displays code status
     }
   });
   res.status(204).json({ id }); // returns the deleted item
@@ -110,18 +117,36 @@ app.put("/lps/:id", (req, res) => {
   const { id, ...newData } = rawData; // separates the id which is not updatable from the new data updated by the client
 
   // The spread operator (...) allows us to accept a variable number of arguments and store them in an array
-  const updatedLp = {
-    ...lp,
-    title: rawData.title || lp.title,
-    description: rawData.description ?? lp.description,
-    artist: rawData.artist || lp.artist,
-    release_year: rawData.release_year ?? lp.release_year,
-    picture: rawData.picture ?? lp.picture,
-    label: rawData.label ?? lp.label,
-    createdAt: rawData.createdAt ?? lp.createdAt,
-  }; // updates the former data with the new ones (some fields are mandatory || some fields can be emptied)
+  // enforce the non-nullable property of fields below
+  if (!lp.title) {
+    res.status(400).json({ error: "Title cannot be empty. " });
+  }
+  if (!lp.artist) {
+    res.status(400).json({ error: "Artist cannot be empty. " });
+  }
 
-  lps.splice(lpIndex, 1, updatedLp); // deletes the item at current index and replaces it with the updatedData
+  // pushes the new data to the database
+  db.run(
+    "UPDATE lp SET title=?, description=?, artist=?, release_year=?, picture=?, label=?, createdAt=?) WHERE id=?;",
+    [id],
+    [
+      lp?.title,
+      lp?.description,
+      lp?.artist,
+      lp?.release_year,
+      lp?.picture,
+      lp?.label,
+      lp?.createdAt,
+    ], // inserts into database the data sent by the client [ lp.xxx, ...] via a prepared statement ("INSERT ... ?)")
+    function (err) {
+      // if error occurs due to incomplete or incorrect data sent
+      if (err) {
+        console.error(err.message);
+        response.sendStatus(500);
+        return;
+      }
+    }
+  );
 
-  res.status(204).json({ lp: updatedLp }); // returns the updated item with status code, linking the item via its id to the updated data
+  res.status(204).json({ lp }); // returns the updated item with status code, linking the item via its id to the updated data
 });
