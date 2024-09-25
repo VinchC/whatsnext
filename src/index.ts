@@ -2,8 +2,6 @@ import express, { raw, response } from "express"; // allows to use Express as th
 require("dotenv").config(); // allows to use .env file and its related private data
 import { Database } from "sqlite3"; // allows to use sqlite3 database to manage queries
 
-import { lps } from "./lps"; // import data from another file
-
 const app = express(); // defines Express as the application server
 
 const port = process.env.REACT_APP_SERVER_PORT; // gets the port defined in a secret variable in the .env file
@@ -21,14 +19,14 @@ app.use(express.json()); //allows implementation of the post route
 
 // access to home page
 app.get("/", (req, res) => {
-  res.send("HELLO"); // the send function displays text on the page
+  return res.send("HELLO"); // the send function displays text on the page
 });
 
 // gets all items
 app.get("/lps", (req, res) => {
   db.all("SELECT * FROM lp;", function (err, lps) {
     // get all items from database instead of importing them from a dedidated file
-    res.json({ lps });
+    return res.json({ lps });
   }); // adding or removing brackets change the data displayed, including the name of the variable as a data if present
 });
 
@@ -42,13 +40,13 @@ app.get("/lps/:id", (req, res) => {
     // if error
     if (err) {
       console.error(err.message); // displays error message
-      res.sendStatus(500); // code status Internal Server Error
+      return res.sendStatus(500); // code status Internal Server Error
     }
 
     if (lp) {
-      res.json({ lp }); // returns the item
+      return res.json({ lp }); // returns the item
     } else {
-      res.sendStatus(400); // item doesn't exist
+      return res.sendStatus(400); // item doesn't exist
     }
   });
 });
@@ -61,10 +59,10 @@ app.delete("/lps/:id", (req, res) => {
   db.run("DELETE FROM lp WHERE id=?;", [id], function (err) {
     if (err) {
       console.error(err.message); // displays error message in console
-      response.sendStatus(500); // displays code status
+      return res.sendStatus(500); // displays code status
     }
   });
-  res.status(204).json({ id }); // returns the deleted item
+  return res.status(204).json({ id }); // returns the deleted item
 });
 
 // creates a new item
@@ -73,10 +71,10 @@ app.post("/lps", (req, res) => {
 
   // enforce the non-nullable property of fields below
   if (!lp.title) {
-    res.status(400).json({ error: "Title cannot be empty. " });
+    return res.status(400).json({ error: "Title cannot be empty. " });
   }
   if (!lp.artist) {
-    res.status(400).json({ error: "Artist cannot be empty. " });
+    return res.status(400).json({ error: "Artist cannot be empty. " });
   }
 
   // pushes the new data to the database
@@ -94,9 +92,9 @@ app.post("/lps", (req, res) => {
     function (err) {
       // if error occurs due to incomplete or incorrect data sent
       if (err) {
-        res.status(400);
+        return res.status(400);
       }
-      res.status(201).json({ id: this.lastID }); // returns the newly created item (corresponding to the last id added in db) with status code
+      return res.status(201).json({ id: this.lastID }); // returns the newly created item (corresponding to the last id added in db) with status code
     }
   );
 });
@@ -123,9 +121,9 @@ app.put("/lps/:id", (req, res) => {
     // if error
     if (err) {
       console.error(err.message); // displays error message
-      res.sendStatus(500); // code status Internal Server Error
+      return res.sendStatus(500); // code status Internal Server Error
     } else if (!lp) {
-      res.sendStatus(400); // item doesn't exist
+      return res.sendStatus(400); // item doesn't exist
     } else {
       const rawData = req.body; // gets the new data sent by the client
 
@@ -165,9 +163,9 @@ app.put("/lps/:id", (req, res) => {
         function (err) {
           if (err) {
             console.error(err.message); // displays error message
-            res.sendStatus(500); // code status Internal Server Error
+            return res.sendStatus(500); // code status Internal Server Error
           } else {
-            res.status(204).json({ lp: updatedLp }); // returns the updated item with status code, emphasizing the fact that the lp is now the updatedLp
+            return res.status(204).json({ lp: updatedLp }); // returns the updated item with status code, emphasizing the fact that the lp is now the updatedLp
           }
         }
       );

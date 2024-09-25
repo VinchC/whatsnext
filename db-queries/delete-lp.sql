@@ -1,1 +1,1 @@
-DELETE FROM lp WHERE id=4;
+DELETE FROM lp WHERE id=5;
