@@ -1,11 +1,11 @@
-PUT http://localhost:4000/lps/2
+PUT http://localhost:4000/lps/5
 Content-Type: application/json
 
 {
-    "id": 3,
-    "title": "aaaaaaaaaaaaaaaa",
+    "id": 5,
+    "title": "ccc",
     "description": "",
-    "artist": "aaaaaaaaaaaa",
+    "artist": "ccc",
     "release_year": "",
     "picture":
       "",

@@ -1,0 +1,1 @@
+UPDATE lp SET title="CCC", artist="CCC" WHERE id=5;

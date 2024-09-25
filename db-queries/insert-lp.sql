@@ -1,0 +1,1 @@
+INSERT INTO lp (title, artist) VALUES ("Enter The Wu-Tang (36 Chambers)", "Wu-Tang Clan");
