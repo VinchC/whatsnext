@@ -101,52 +101,76 @@ app.post("/lps", (req, res) => {
   );
 });
 
+// definition of the type of the data expected for an lp object
+type LPtype = {
+  id: number;
+  title: string;
+  description?: string;
+  artist: string;
+  release_year?: number;
+  picture?: string;
+  label?: string;
+  createdAt?: number;
+};
+
 // updates an item via its id
 app.put("/lps/:id", (req, res) => {
-  const _id = parseInt(req.params.id); // gets the URL parameter related to this item - _id prevents the field id to be updated by the user
-  const lpIndex = lps.findIndex((lp) => lp.id === _id); // gets the index of an item which is the same as the parameter in the URL
+  const id = parseInt(req.params.id); // gets the URL parameter related to this item
 
-  // if item with this index doesn't exist
-  if (lpIndex === -1) {
-    res.sendStatus(404); // returns status code "Not found"
-  }
+  db.get("SELECT * FROM lp WHERE id = ?;", [id], function (err, lp: LPtype) {
+    // gets the specific lp via a prepared statement - returns the item with its type defined above or an error (err, lp)
 
-  const lp = lps[lpIndex]; // gets the item which index corresponds to the parameter of the URL
-  const rawData = req.body; // gets the new data sent by the client (including the current id of the item)
+    // if error
+    if (err) {
+      console.error(err.message); // displays error message
+      res.sendStatus(500); // code status Internal Server Error
+    } else if (!lp) {
+      res.sendStatus(400); // item doesn't exist
+    } else {
+      const rawData = req.body; // gets the new data sent by the client
 
-  const { id, ...newData } = rawData; // separates the id which is not updatable from the new data updated by the client
-
-  // The spread operator (...) allows us to accept a variable number of arguments and store them in an array
-  // enforce the non-nullable property of fields below
-  if (!lp.title) {
-    res.status(400).json({ error: "Title cannot be empty. " });
-  }
-  if (!lp.artist) {
-    res.status(400).json({ error: "Artist cannot be empty. " });
-  }
-
-  // pushes the new data to the database
-  db.run(
-    "UPDATE lp SET title=?, description=?, artist=?, release_year=?, picture=?, label=?, createdAt=?) WHERE id=?;",
-    [id],
-    [
-      lp?.title,
-      lp?.description,
-      lp?.artist,
-      lp?.release_year,
-      lp?.picture,
-      lp?.label,
-      lp?.createdAt,
-    ], // inserts into database the data sent by the client [ lp.xxx, ...] via a prepared statement ("INSERT ... ?)")
-    function (err) {
-      // if error occurs due to incomplete or incorrect data sent
-      if (err) {
-        console.error(err.message);
-        response.sendStatus(500);
-        return;
+      // enforces the non nullable property of following fields
+      if (rawData.title === "") {
+        res.status(400).json({ error: "Title must not be empty" });
       }
-    }
-  );
+      if (rawData.artist === "") {
+        res.status(400).json({ error: "Artist must not be empty" });
+      }
 
-  res.status(204).json({ lp }); // returns the updated item with status code, linking the item via its id to the updated data
+      // The spread operator (...) allows us to accept a variable number of arguments and store them into an array
+      // creates a new variable which will update the current item with each of the the new data received
+      const updatedLp = {
+        ...lp,
+        title: rawData.title || lp.title,
+        description: rawData.description ?? lp.description,
+        artist: rawData.artist || lp.artist,
+        release_year: rawData.release_year ?? lp.release_year,
+        picture: rawData.picture ?? lp.picture,
+        label: rawData.label ?? lp.label,
+      };
+
+      // pushes the new data to the database thanks to a prepared statement
+      db.run(
+        "UPDATE lp SET title=?, description=?, artist=?, release_year=?, picture=?, label=?) WHERE id=?;",
+        [
+          updatedLp.title,
+          updatedLp.description,
+          updatedLp.artist,
+          updatedLp.release_year,
+          updatedLp.picture,
+          updatedLp.label,
+        ], // updates the data sent by the client [ updatedLp.xxx, ...] via a prepared statement ("UPDATE ... ?)")
+
+        // if error
+        function (err) {
+          if (err) {
+            console.error(err.message); // displays error message
+            res.sendStatus(500); // code status Internal Server Error
+          } else {
+            res.status(204).json({ lp: updatedLp }); // returns the updated item with status code, emphasizing the fact that the lp is now the updatedLp
+          }
+        }
+      );
+    }
+  });
 });

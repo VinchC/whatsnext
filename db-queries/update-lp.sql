@@ -1,1 +1,1 @@
-UPDATE lp SET title="bbb", artist="bbb" WHERE id=5;
+UPDATE lp SET title="CCC", artist="CCC" WHERE id=5;
