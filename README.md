@@ -82,10 +82,12 @@ create sqlite database :
 
 create connection to database via VSCode
 
-create db-queries folder with different files which are sqlite queries
+create db-queries folder with different files to execute sqlite queries
 
-execute each file with the triangle in the upper right corner of VSCode
+- create a create-table-table_name.sql file with attributes
 
-npm i sqlite3 to create an new object Database
+- execute each file with the triangle in the upper right corner of VSCode
+
+npm i sqlite3 to create a new object Database to access via server
 
 update the existing routes to use the SQL queries
