@@ -1,0 +1,1 @@
+UPDATE category SET name="CCC" WHERE id=999;

@@ -1,1 +1,1 @@
-INSERT INTO lp (title, artist) VALUES ("Enter The Wu-Tang (36 Chambers)", "Wu-Tang Clan");
+INSERT INTO lp (title, artist, categoryId) VALUES ("Enter The Wu-Tang (36 Chambers)", "Wu-Tang Clan", 1), ("The Chronic", "Dr Dre", 2);
