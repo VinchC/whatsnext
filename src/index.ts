@@ -48,16 +48,16 @@ app.get("/lps/:id", (req, res) => {
 // deletes an item via its id
 app.delete("/lps/:id", (req, res) => {
   const id = parseInt(req.params.id); // gets the URL parameter related to this item
-  const lpIndex = lps.findIndex((lp) => lp.id === id); // gets the index of an item which is the same as the parameter in the URL
 
-  // if item with this index doesn't exist
-  if (lpIndex === -1) {
-    res.sendStatus(404); // returns status code "Not found"
-  }
-
-  const lp = lps[lpIndex]; // gets the item which index corresponds to the parameter of the URL
-  lps.splice(lpIndex, 1); // removes 1 item starting at the index corresponding to the params of the URL
-  res.json({ lp }); // returns the deleted item
+  // deletes the chosen item via a prepared statement taking id as a parameter
+  db.run("DELETE FROM lp WHERE id=?;", [id], function (err) {
+    if (err) {
+      console.error(err.message);
+      response.sendStatus(500);
+      return;
+    }
+  });
+  res.status(204).json({ id }); // returns the deleted item
 });
 
 // creates a new item
