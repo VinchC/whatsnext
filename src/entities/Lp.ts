@@ -56,6 +56,16 @@ class Lp extends BaseEntity {
     }
   }
 
+  static async saveNewLp(lpData: any): Promise<Lp> {
+    // Promise indicates the completion of an asynchronous operation
+    const newLp = new Lp(lpData); // new object Lp is created with the data received which is checked by entity logic (type, constructor)
+
+    const savedLp = await newLp.save(); // pushes the new data to the database - save is a method of the model
+
+    console.log(`New Lp created: ${savedLp.getStringRepresentation()}.`);
+    return savedLp;
+  }
+  
   // returns an array of items
   static async getAllLps(): Promise<Lp[]> {
     // constructor must indicate lp? in case there are no existing values to return
@@ -78,15 +88,6 @@ class Lp extends BaseEntity {
     return `${this.artist} - ${this.title}`;
   }
 
-  static async saveNewLp(lpData: any): Promise<Lp> {
-    // Promise indicates the completion of an asynchronous operation
-    const newLp = new Lp(lpData); // new object Lp is created with the data received which is checked by entity logic (type, constructor)
-
-    const savedLp = await newLp.save(); // pushes the new data to the database - save is a method of the model
-
-    console.log(`New Lp created: ${savedLp.getStringRepresentation()}.`);
-    return savedLp;
-  }
 
   static async deleteLp(id: number): Promise<void> {
     const { affected } = await Lp.delete(id); // { affected } represents any number of rows affected by the query - delete is a method of the model

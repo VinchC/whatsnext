@@ -1,1 +1,1 @@
-INSERT INTO category (name) VALUES ("East Coast"), ("West Coast");
+INSERT INTO category (title) VALUES ("East Coast"), ("West Coast");

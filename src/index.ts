@@ -3,13 +3,14 @@ require("dotenv").config(); // allows to use .env file and its related private d
 import { Database } from "sqlite3"; // allows to use sqlite3 database to manage queries
 import { DataSource } from "typeorm"; // allows to use DataSource object
 import Lp from "./entities/Lp"; // imports a specific class
+import Category from "./entities/Category"; // imports a specific class
 import { isError } from "./utils";
 
 // defines a DataSource object in the context of the project to ensure connection to a specific database
 const appDataSource = new DataSource({
   type: "sqlite",
   database: "db.sqlite", // source of the database
-  entities: [Lp], // lists the entities of the database
+  entities: [Lp, Category], // lists the entities of the database
   synchronize: true, // useful in dev, dangerous in prod
 });
 
@@ -40,6 +41,11 @@ app.get("/lps", async (req, res) => {
   return res.json({ lps });
 }); // adding or removing brackets change the data displayed, including the name of the variable as a data if present
 
+app.get("/categories", async (req, res) => {
+  const categories = await Category.getAllCategories();
+  return res.status(200).json({ categories });
+});
+
 // gets an item via its id
 app.get("/lps/:id", async (req, res) => {
   const id = parseInt(req.params.id); // gets the URL parameter related to this item
@@ -47,6 +53,19 @@ app.get("/lps/:id", async (req, res) => {
   try {
     const lp = await Lp.getLpById(id); // call of the entity method (instead of having to write the SQL query SELECT... WHERE...) which will call the model
     return res.json({ lp }); // returns the deleted item
+  } catch (error) {
+    if (isError(error)) {
+      return res.status(404).json({ error: error.message });
+    }
+  }
+});
+
+app.get("/categories/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  try {
+    const category = await Category.getCategoryById(id);
+    return res.status(200).json({ category });
   } catch (error) {
     if (isError(error)) {
       return res.status(404).json({ error: error.message });
@@ -68,21 +87,46 @@ app.delete("/lps/:id", async (req, res) => {
   }
 });
 
+app.delete("/categories/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+
+  try {
+    await Category.deleteCategory(id);
+    return res.status(204).json({ id });
+  } catch (error) {
+    if (isError(error)) {
+      return res.status(404).json({ error: error.message });
+    }
+  }
+});
+
 // creates a new item
 app.post("/lps", async (req, res) => {
   const lpData = req.body; // gets the data sent by the client
 
   // enforces the non-nullable property of fields below
   if (!lpData.title) {
-    return res.status(400).json({ error: "Title cannot be empty. " });
+    return res.status(400).json({ error: "Title cannot be empty." });
   }
   if (!lpData.artist) {
-    return res.status(400).json({ error: "Artist cannot be empty. " });
+    return res.status(400).json({ error: "Artist cannot be empty." });
   }
 
   const savedLp = await Lp.saveNewLp(lpData); // call of the entity method (instead of having to write the SQL query INSERT INTO...) which will call the model
 
   return res.status(201).json({ lp: savedLp }); // returns the new json property (lp) which value is the newly savedLp object
+});
+
+app.post("/categories", async (req, res) => {
+  const categoryData = req.body;
+
+  if (!categoryData.title) {
+    return res.status(400).json({ error: "Title cannot be empty." });
+  }
+
+  const savedCategory = await Category.saveNewCategory(categoryData);
+
+  return res.status(201).json({ category: savedCategory });
 });
 
 // updates an item via its id
@@ -105,6 +149,24 @@ app.put("/lps/:id", async (req, res) => {
   } catch (error) {
     if (isError(error)) {
       return res.status(404).json({ error: error.message });
+    }
+  }
+});
+
+app.put("/categories/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  const updatedData = req.body;
+
+  if (!updatedData.title) {
+    return res.status(400).json({ error: "Title cannot be empty. " });
+  }
+
+  try {
+    const updatedCategory = await Category.updateCategory(id, updatedData);
+    return res.status(204).json({ category: updatedCategory });
+  } catch (error) {
+    if (isError(error)) {
+      return res.status(400).json({ error: error.message });
     }
   }
 });
