@@ -72,7 +72,18 @@ class Lp extends BaseEntity implements TypeLp {
 
   // getLpById(id: number) {}
 
-  // createLp() {}
+  getStringRepresentation() {
+    return `${this.artist} - ${this.title}`;
+  }
+
+  static async saveNewLp(lpData: any) {
+    const newLp = new Lp(lpData); // new object Lp is created with the data received which is checked by entity logic (type, constructor)
+
+    const savedLp = await newLp.save(); // pushes the new data to the database
+
+    console.log(`New Lp created: ${savedLp.getStringRepresentation()}.`);
+    return savedLp;
+  }
 
   // deleteLp(id: number) {}
 

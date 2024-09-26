@@ -88,9 +88,7 @@ app.post("/lps", async (req, res) => {
     return res.status(400).json({ error: "Artist cannot be empty. " });
   }
 
-  const newLp = new Lp(lpData); // new object Lp is created with the data received which are checked by dedicated entity logic (type, constructor)
-
-  const savedLp = await newLp.save(); // pushes the new data to the database
+  const savedLp = await Lp.saveNewLp(lpData); // call of the Lp method which will call the model
 
   return res.status(201).json({ lp: savedLp }); // returns the new json property (lp) which value is the newly savedLp object
 });
