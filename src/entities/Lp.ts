@@ -46,23 +46,37 @@ class Lp extends BaseEntity implements TypeLp {
   @CreateDateColumn()
   createdAt!: Date;
 
-  // constructor defines which attributes are mandatory when a new object is created
-  constructor(id: number, title: string, artist: string) {
+  // constructor defines which attributes are mandatory when a new object is created and uses the TypeLp defined above to ensure correct types are used
+  constructor(lp: TypeLp) {
     super(); // super() marks the inheritance of the BaseEntity class
-    this.id = id;
-    this.title = title;
-    this.artist = artist;
+    if (lp) {
+      this.title = lp.title;
+      this.artist = lp.artist;
+
+      if (lp.description) {
+        this.description = lp.description;
+      }
+      if (lp.release_year) {
+        this.release_year = lp.release_year;
+      }
+      if (lp.picture) {
+        this.picture = lp.picture;
+      }
+      if (lp.label) {
+        this.label = lp.label;
+      }
+    }
   }
 
-  getAllLps() {}
+  // getAllLps() {}
 
-  getLpById(id: number) {}
+  // getLpById(id: number) {}
 
-  createLp() {}
+  // createLp() {}
 
-  deleteLp(id: number) {}
+  // deleteLp(id: number) {}
 
-  updateLp(id: number) {}
+  // updateLp(id: number) {}
 }
 
 export default Lp;

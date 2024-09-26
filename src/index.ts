@@ -77,36 +77,22 @@ app.delete("/lps/:id", (req, res) => {
 });
 
 // creates a new item
-app.post("/lps", (req, res) => {
-  const lp = req.body; // gets the data sent by the client
+app.post("/lps", async (req, res) => {
+  const lpData = req.body; // gets the data sent by the client
 
-  // enforce the non-nullable property of fields below
-  if (!lp.title) {
+  // enforces the non-nullable property of fields below
+  if (!lpData.title) {
     return res.status(400).json({ error: "Title cannot be empty. " });
   }
-  if (!lp.artist) {
+  if (!lpData.artist) {
     return res.status(400).json({ error: "Artist cannot be empty. " });
   }
 
-  // pushes the new data to the database
-  db.run(
-    "INSERT INTO lp (title, description, artist, release_year, picture, label) VALUES (?, ?, ?, ?, ?, ?);",
-    [
-      lp.title,
-      lp.description,
-      lp.artist,
-      lp.release_year,
-      lp.picture,
-      lp.label,
-    ], // inserts into database the data sent by the client [ lp.xxx, ...] via a prepared statement ("INSERT ... ?)")
-    function (err) {
-      // if error occurs due to incomplete or incorrect data sent
-      if (err) {
-        return res.status(400);
-      }
-      return res.status(201).json({ id: this.lastID }); // returns the newly created item (corresponding to the last id added in db) with status code
-    }
-  );
+  const newLp = new Lp(lpData); // new object Lp is created with the data received which are checked by dedicated entity logic (type, constructor)
+
+  const savedLp = await newLp.save(); // pushes the new data to the database
+
+  return res.status(201).json({ lp: savedLp }); // returns the new json property (lp) which value is the newly savedLp object
 });
 
 // updates an item via its id
