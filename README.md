@@ -91,3 +91,13 @@ create db-queries folder with different files to execute sqlite queries
 npm i sqlite3 to create a new object Database to access via server
 
 update the existing routes to use the SQL queries
+
+## Install ORM
+
+npm i typeorm
+
+npm i reflect-metadata
+
+change tsconfig:
+- uncomment experimentalDecorators
+- uncomment emitDecoratorMetadata
