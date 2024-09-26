@@ -1,1 +1,3 @@
-INSERT INTO lp (title, artist) VALUES ("Enter The Wu-Tang (36 Chambers)", "Wu-Tang Clan");
+INSERT INTO lp (title, description, artist, release_year, picture, label, createdAt, categoryId) VALUES 
+("Enter The Wu-Tang (36 Chambers)", "Classic East Coast album", "Wu-Tang Clan", 1993, "https://en.wikipedia.org/wiki/Enter_the_Wu-Tang_(36_Chambers)#/media/File:Wu-TangClanEntertheWu-Tangalbumcover.jpg", "Loud", "...", 1), 
+("The Chronic", "Classic West Coast album", "Dr Dre", 1992, "https://en.wikipedia.org/wiki/The_Chronic#/media/File:Dr.DreTheChronic.jpg", "Death Row", "...", 2);
