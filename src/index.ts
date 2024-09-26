@@ -34,12 +34,10 @@ app.get("/", (req, res) => {
 });
 
 // gets all items
-app.get("/lps", (req, res) => {
-  db.all("SELECT * FROM lp;", function (err, lps) {
-    // get all items from database instead of importing them from a dedidated file
-    return res.json({ lps });
-  }); // adding or removing brackets change the data displayed, including the name of the variable as a data if present
-});
+app.get("/lps", async (req, res) => {
+  const lps = await Lp.getAllLps(); // call of the item method (instead of having to write the SQL query SELECT...) which will call the model
+  return res.json({ lps });
+}); // adding or removing brackets change the data displayed, including the name of the variable as a data if present
 
 // gets an item via its id
 app.get("/lps/:id", (req, res) => {
@@ -88,7 +86,7 @@ app.post("/lps", async (req, res) => {
     return res.status(400).json({ error: "Artist cannot be empty. " });
   }
 
-  const savedLp = await Lp.saveNewLp(lpData); // call of the Lp method which will call the model
+  const savedLp = await Lp.saveNewLp(lpData); // call of the item method (instead of having to write the SQL query INSERT INTO...) which will call the model
 
   return res.status(201).json({ lp: savedLp }); // returns the new json property (lp) which value is the newly savedLp object
 });

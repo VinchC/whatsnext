@@ -47,7 +47,7 @@ class Lp extends BaseEntity implements TypeLp {
   createdAt!: Date;
 
   // constructor defines which attributes are mandatory when a new object is created and uses the TypeLp defined above to ensure correct types are used
-  constructor(lp: TypeLp) {
+  constructor(lp?: TypeLp) {
     super(); // super() marks the inheritance of the BaseEntity class
     if (lp) {
       this.title = lp.title;
@@ -68,15 +68,22 @@ class Lp extends BaseEntity implements TypeLp {
     }
   }
 
-  // getAllLps() {}
+  // returns an array of items
+  static async getAllLps(): Promise<Lp[]> {
+    // constructor must indicate lp? in case there are no existing values to return
+    const lps = await Lp.find();
+
+    return lps;
+  }
 
   // getLpById(id: number) {}
 
-  getStringRepresentation() {
+  getStringRepresentation(): string {
     return `${this.artist} - ${this.title}`;
   }
 
-  static async saveNewLp(lpData: any) {
+  static async saveNewLp(lpData: any): Promise<Lp> {
+    // Promise indicates the completion of an asynchronous operation
     const newLp = new Lp(lpData); // new object Lp is created with the data received which is checked by entity logic (type, constructor)
 
     const savedLp = await newLp.save(); // pushes the new data to the database
