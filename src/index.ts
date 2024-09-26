@@ -86,63 +86,25 @@ app.post("/lps", async (req, res) => {
 });
 
 // updates an item via its id
-app.put("/lps/:id", (req, res) => {
+app.put("/lps/:id", async (req, res) => {
   const id = parseInt(req.params.id); // gets the URL parameter related to this item
 
-  db.get("SELECT * FROM lp WHERE id = ?;", [id], function (err, lp: TypeLp) {
-    // gets the specific lp via a prepared statement - returns the item with its type defined above or an error (err, lp)
+  const lpData = req.body; // gets the data sent by the client
 
-    // if error
-    if (err) {
-      console.error(err.message); // displays error message
-      return res.sendStatus(500); // code status Internal Server Error
-    } else if (!lp) {
-      return res.sendStatus(400); // item doesn't exist
-    } else {
-      const rawData = req.body; // gets the new data sent by the client
+  // enforces the non-nullable property of fields below
+  if (!lpData.title) {
+    return res.status(400).json({ error: "Title cannot be empty. " });
+  }
+  if (!lpData.artist) {
+    return res.status(400).json({ error: "Artist cannot be empty. " });
+  }
 
-      // enforces the non nullable property of following fields
-      if (rawData.title === "") {
-        res.status(400).json({ error: "Title must not be empty" });
-      }
-      if (rawData.artist === "") {
-        res.status(400).json({ error: "Artist must not be empty" });
-      }
-
-      // The spread operator (...) allows us to accept a variable number of arguments and store them into an array
-      // creates a new variable which will update the current item with each of the the new data received
-      const updatedLp = {
-        ...lp,
-        title: rawData.title || lp.title,
-        description: rawData.description ?? lp.description,
-        artist: rawData.artist || lp.artist,
-        release_year: rawData.release_year ?? lp.release_year,
-        picture: rawData.picture ?? lp.picture,
-        label: rawData.label ?? lp.label,
-      };
-
-      // pushes the new data to the database thanks to a prepared statement
-      db.run(
-        "UPDATE lp SET title=?, description=?, artist=?, release_year=?, picture=?, label=?) WHERE id=?;",
-        [
-          updatedLp.title,
-          updatedLp.description,
-          updatedLp.artist,
-          updatedLp.release_year,
-          updatedLp.picture,
-          updatedLp.label,
-        ], // updates the data sent by the client [ updatedLp.xxx, ...] via a prepared statement ("UPDATE ... ?)")
-
-        // if error
-        function (err) {
-          if (err) {
-            console.error(err.message); // displays error message
-            return res.sendStatus(500); // code status Internal Server Error
-          } else {
-            return res.status(204).json({ lp: updatedLp }); // returns the updated item with status code, emphasizing the fact that the lp is now the updatedLp
-          }
-        }
-      );
+  try {
+    const updatedLp = await Lp.updateLp(id, lpData); // call of the entity method (instead of having to write the SQL query UPDATE...) which will call the model
+    return res.status(204).json({ lp: updatedLp }); // returns the updated item
+  } catch (error) {
+    if (isError(error)) {
+      return res.status(404).json({ error: error.message });
     }
-  });
+  }
 });

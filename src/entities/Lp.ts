@@ -108,7 +108,16 @@ class Lp extends BaseEntity implements TypeLp {
     }
   }
 
-  // updateLp(id: number) {}
+  // updates the item thanks to a sequence of three different functions (entity getLpById - model update - model reload)
+  static async updateLp(id: number, partialLp: Partial<Lp>): Promise<Lp> { // uses as parameters the id and the (partial) data received
+    const lp = await Lp.getLpById(id); // uses the entity method to save time
+
+    await Lp.update(id, partialLp);  // updates the Lp object in database - update is a method of the model
+
+    await lp.reload(); // reloads entity data from the database
+
+    return lp;
+  }
 }
 
 export default Lp;
