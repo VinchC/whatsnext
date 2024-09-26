@@ -36,29 +36,22 @@ app.get("/", (req, res) => {
 
 // gets all items
 app.get("/lps", async (req, res) => {
-  const lps = await Lp.getAllLps(); // call of the item method (instead of having to write the SQL query SELECT...) which will call the model
+  const lps = await Lp.getAllLps(); // call of the entity method (instead of having to write the SQL query SELECT...) which will call the model
   return res.json({ lps });
 }); // adding or removing brackets change the data displayed, including the name of the variable as a data if present
 
 // gets an item via its id
-app.get("/lps/:id", (req, res) => {
-  const id = req.params.id; // gets the URL parameter related to this item
+app.get("/lps/:id", async (req, res) => {
+  const id = parseInt(req.params.id); // gets the URL parameter related to this item
 
-  db.get("SELECT * FROM lp WHERE id = ?;", [id], (err, lp) => {
-    // gets the specific lp via a prepared statement - returns the item or an error (err, lp)
-
-    // if error
-    if (err) {
-      console.error(err.message); // displays error message
-      return res.sendStatus(500); // code status Internal Server Error
+  try {
+    const lp = await Lp.getLpById(id); // call of the entity method (instead of having to write the SQL query SELECT... WHERE...) which will call the model
+    return res.json({ lp }); // returns the deleted item
+  } catch (error) {
+    if (isError(error)) {
+      return res.status(404).json({ error: error.message });
     }
-
-    if (lp) {
-      return res.json({ lp }); // returns the item
-    } else {
-      return res.sendStatus(400); // item doesn't exist
-    }
-  });
+  }
 });
 
 // deletes an item via its id
@@ -66,11 +59,11 @@ app.delete("/lps/:id", async (req, res) => {
   const id = parseInt(req.params.id); // gets the URL parameter related to this item
 
   try {
-    await Lp.deleteLp(id); // call of the item method (instead of having to write the SQL query DELETE...) which will call the model
+    await Lp.deleteLp(id); // call of the entity method (instead of having to write the SQL query DELETE...) which will call the model
     return res.status(204).json({ id }); // returns the deleted item
   } catch (error) {
     if (isError(error)) {
-      return response.status(404).json({ error: error.message });
+      return res.status(404).json({ error: error.message });
     }
   }
 });
@@ -87,7 +80,7 @@ app.post("/lps", async (req, res) => {
     return res.status(400).json({ error: "Artist cannot be empty. " });
   }
 
-  const savedLp = await Lp.saveNewLp(lpData); // call of the item method (instead of having to write the SQL query INSERT INTO...) which will call the model
+  const savedLp = await Lp.saveNewLp(lpData); // call of the entity method (instead of having to write the SQL query INSERT INTO...) which will call the model
 
   return res.status(201).json({ lp: savedLp }); // returns the new json property (lp) which value is the newly savedLp object
 });

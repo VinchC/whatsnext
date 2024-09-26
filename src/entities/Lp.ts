@@ -71,12 +71,20 @@ class Lp extends BaseEntity implements TypeLp {
   // returns an array of items
   static async getAllLps(): Promise<Lp[]> {
     // constructor must indicate lp? in case there are no existing values to return
-    const lps = await Lp.find();
+    const lps = await Lp.find(); // find is a method of the model
 
     return lps;
   }
 
-  // getLpById(id: number) {}
+  // returns an item
+  static async getLpById(id: number): Promise<Lp> {
+    const lp = await Lp.findOneBy({ id }); // findOneBy is a method of the model
+    if (!lp) {
+      throw new Error(`Lp with ID ${id} does not exist.`);
+    }
+
+    return lp;
+  }
 
   getStringRepresentation(): string {
     return `${this.artist} - ${this.title}`;
