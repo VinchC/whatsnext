@@ -2,7 +2,7 @@ import express, { raw, response } from "express"; // allows to use Express as th
 require("dotenv").config(); // allows to use .env file and its related private data
 import { Database } from "sqlite3"; // allows to use sqlite3 database to manage queries
 import { DataSource } from "typeorm"; // allows to use DataSource object
-import Lp, { TypeLp } from "./entities/Lp"; // imports a specific class
+import Lp from "./entities/Lp"; // imports a specific class
 import { isError } from "./utils";
 
 // defines a DataSource object in the context of the project to ensure connection to a specific database

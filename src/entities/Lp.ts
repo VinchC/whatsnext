@@ -6,22 +6,10 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 
-// definition of the type of the data expected for an Lp object
-export type TypeLp = {
-  id: number;
-  title: string;
-  description?: string;
-  artist: string;
-  release_year?: number;
-  picture?: string;
-  label?: string;
-  createdAt?: Date;
-};
-
 // defines the object with its attributes and methods
 // implements clause is only a check that the class can be treated as the interface type - it doesn’t change the type of the class or its methods
 @Entity()
-class Lp extends BaseEntity implements TypeLp {
+class Lp extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
@@ -47,7 +35,7 @@ class Lp extends BaseEntity implements TypeLp {
   createdAt!: Date;
 
   // constructor defines which attributes are mandatory when a new object is created and uses the TypeLp defined above to ensure correct types are used
-  constructor(lp?: TypeLp) {
+  constructor(lp?: Lp) {
     super(); // super() marks the inheritance of the BaseEntity class
     if (lp) {
       this.title = lp.title;
@@ -109,10 +97,11 @@ class Lp extends BaseEntity implements TypeLp {
   }
 
   // updates the item thanks to a sequence of three different functions (entity getLpById - model update - model reload)
-  static async updateLp(id: number, partialLp: Partial<Lp>): Promise<Lp> { // uses as parameters the id and the (partial) data received
+  static async updateLp(id: number, partialLp: Partial<Lp>): Promise<Lp> {
+    // uses as parameters the id and the (partial) data received
     const lp = await Lp.getLpById(id); // uses the entity method to save time
 
-    await Lp.update(id, partialLp);  // updates the Lp object in database - update is a method of the model
+    await Lp.update(id, partialLp); // updates the Lp object in database - update is a method of the model
 
     await lp.reload(); // reloads entity data from the database
 
