@@ -86,13 +86,19 @@ class Lp extends BaseEntity implements TypeLp {
     // Promise indicates the completion of an asynchronous operation
     const newLp = new Lp(lpData); // new object Lp is created with the data received which is checked by entity logic (type, constructor)
 
-    const savedLp = await newLp.save(); // pushes the new data to the database
+    const savedLp = await newLp.save(); // pushes the new data to the database - save is a method of the model
 
     console.log(`New Lp created: ${savedLp.getStringRepresentation()}.`);
     return savedLp;
   }
 
-  // deleteLp(id: number) {}
+  static async deleteLp(id: number): Promise<void> {
+    const { affected } = await Lp.delete(id); // { affected } represents any number of rows affected by the query - delete is a method of the model
+
+    if (affected === 0) {
+      throw new Error(`Lp with ID ${id} does not exist.`);
+    }
+  }
 
   // updateLp(id: number) {}
 }

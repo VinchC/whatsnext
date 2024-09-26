@@ -3,6 +3,7 @@ require("dotenv").config(); // allows to use .env file and its related private d
 import { Database } from "sqlite3"; // allows to use sqlite3 database to manage queries
 import { DataSource } from "typeorm"; // allows to use DataSource object
 import Lp, { TypeLp } from "./entities/Lp"; // imports a specific class
+import { isError } from "./utils";
 
 // defines a DataSource object in the context of the project to ensure connection to a specific database
 const appDataSource = new DataSource({
@@ -61,17 +62,17 @@ app.get("/lps/:id", (req, res) => {
 });
 
 // deletes an item via its id
-app.delete("/lps/:id", (req, res) => {
+app.delete("/lps/:id", async (req, res) => {
   const id = parseInt(req.params.id); // gets the URL parameter related to this item
 
-  // deletes the chosen item via a prepared statement taking id as a parameter
-  db.run("DELETE FROM lp WHERE id=?;", [id], function (err) {
-    if (err) {
-      console.error(err.message); // displays error message in console
-      return res.sendStatus(500); // displays code status
+  try {
+    await Lp.deleteLp(id); // call of the item method (instead of having to write the SQL query DELETE...) which will call the model
+    return res.status(204).json({ id }); // returns the deleted item
+  } catch (error) {
+    if (isError(error)) {
+      return response.status(404).json({ error: error.message });
     }
-  });
-  return res.status(204).json({ id }); // returns the deleted item
+  }
 });
 
 // creates a new item
