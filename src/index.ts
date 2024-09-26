@@ -1,6 +1,7 @@
 import express, { raw, response } from "express"; // allows to use Express as the server - whta is the point of raw and response ??
 require("dotenv").config(); // allows to use .env file and its related private data
 import { Database } from "sqlite3"; // allows to use sqlite3 database to manage queries
+import { Lp, TypeLp } from "./entities/Lp";
 
 const app = express(); // defines Express as the application server
 
@@ -99,23 +100,11 @@ app.post("/lps", (req, res) => {
   );
 });
 
-// definition of the type of the data expected for an lp object
-type LPtype = {
-  id: number;
-  title: string;
-  description?: string;
-  artist: string;
-  release_year?: number;
-  picture?: string;
-  label?: string;
-  createdAt?: number;
-};
-
 // updates an item via its id
 app.put("/lps/:id", (req, res) => {
   const id = parseInt(req.params.id); // gets the URL parameter related to this item
 
-  db.get("SELECT * FROM lp WHERE id = ?;", [id], function (err, lp: LPtype) {
+  db.get("SELECT * FROM lp WHERE id = ?;", [id], function (err, lp: TypeLp) {
     // gets the specific lp via a prepared statement - returns the item with its type defined above or an error (err, lp)
 
     // if error
