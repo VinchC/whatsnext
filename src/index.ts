@@ -1,7 +1,16 @@
 import express, { raw, response } from "express"; // allows to use Express as the server - whta is the point of raw and response ??
 require("dotenv").config(); // allows to use .env file and its related private data
 import { Database } from "sqlite3"; // allows to use sqlite3 database to manage queries
-import { Lp, TypeLp } from "./entities/Lp";
+import { DataSource } from "typeorm"; // allows to use DataSource object
+import Lp, { TypeLp } from "./entities/Lp"; // imports a specific class
+
+// defines a DataSource object in the context of the project to ensure connection to a specific database
+const appDataSource = new DataSource({
+  type: "sqlite",
+  database: "db.sqlite", // source of the database
+  entities: [Lp], // lists the entities of the database
+  synchronize: true, // useful in dev, dangerous in prod
+});
 
 const app = express(); // defines Express as the application server
 
@@ -10,7 +19,8 @@ const port = process.env.REACT_APP_SERVER_PORT; // gets the port defined in a se
 const db = new Database("db.sqlite"); // defines a new sqlite database via its dedicated file
 
 // used to check that the server is working
-app.listen(port, () => {
+app.listen(port, async () => {
+  await appDataSource.initialize(); // connects to database at the launch of the app
   console.log(`Server is listening on port ${port}`);
 });
 
@@ -80,7 +90,7 @@ app.post("/lps", (req, res) => {
 
   // pushes the new data to the database
   db.run(
-    "INSERT INTO lp (title, description, artist, release_year, picture, label, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?);",
+    "INSERT INTO lp (title, description, artist, release_year, picture, label) VALUES (?, ?, ?, ?, ?, ?);",
     [
       lp.title,
       lp.description,
@@ -88,7 +98,6 @@ app.post("/lps", (req, res) => {
       lp.release_year,
       lp.picture,
       lp.label,
-      lp.createdAt,
     ], // inserts into database the data sent by the client [ lp.xxx, ...] via a prepared statement ("INSERT ... ?)")
     function (err) {
       // if error occurs due to incomplete or incorrect data sent
