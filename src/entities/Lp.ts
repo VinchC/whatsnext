@@ -119,10 +119,6 @@ class Lp extends BaseEntity {
     return lp;
   }
 
-  getStringRepresentation(): string {
-    return `${this.artist} - ${this.title}`;
-  }
-
   static async deleteLp(id: number): Promise<void> {
     const { affected } = await Lp.delete(id); // { affected } represents any number of rows affected by the query - delete is a method of the model
 
@@ -132,15 +128,26 @@ class Lp extends BaseEntity {
   }
 
   // updates the item thanks to a sequence of three different functions (entity getLpById - model update - model reload)
-  static async updateLp(id: number, partialLp: Partial<Lp>): Promise<Lp> {
+  static async updateLp(
+    id: number,
+    partialLp: Partial<Lp> & { category?: number }
+  ): Promise<Lp> {
     // uses as parameters the id and the (partial) data received
     const lp = await Lp.getLpById(id); // uses the entity method to save time
+
+    if (partialLp.category) {
+      await Category.getCategoryById(partialLp.category);
+    }
 
     await Lp.update(id, partialLp); // updates the Lp object in database - update is a method of the model
 
     await lp.reload(); // reloads entity data from the database
 
     return lp;
+  }
+
+  getStringRepresentation(): string {
+    return `${this.artist} - ${this.title}`;
   }
 }
 

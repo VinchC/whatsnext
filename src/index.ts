@@ -128,12 +128,12 @@ app.put("/lps/:id", async (req, res) => {
   const lpData = req.body; // gets the data sent by the client
 
   // enforces the non-nullable property of fields below
-  if (!lpData.title) {
-    return res.status(400).json({ error: "Title cannot be empty. " });
-  }
-  if (!lpData.artist) {
-    return res.status(400).json({ error: "Artist cannot be empty. " });
-  }
+  // if (!lpData.title) {
+  //   return res.status(400).json({ error: "Title cannot be empty. " });
+  // }
+  // if (!lpData.artist) {
+  //   return res.status(400).json({ error: "Artist cannot be empty. " });
+  // }
 
   try {
     const updatedLp = await Lp.updateLp(id, lpData); // call of the entity method (instead of having to write the SQL query UPDATE...) which will call the model
@@ -149,9 +149,9 @@ app.put("/categories/:id", async (req, res) => {
   const id = parseInt(req.params.id);
   const updatedData = req.body;
 
-  if (!updatedData.title) {
-    return res.status(400).json({ error: "Title cannot be empty. " });
-  }
+  // if (!updatedData.title) {
+  //   return res.status(400).json({ error: "Title cannot be empty. " });
+  // }
 
   try {
     const updatedCategory = await Category.updateCategory(id, updatedData);
