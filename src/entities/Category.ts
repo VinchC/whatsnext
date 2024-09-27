@@ -20,17 +20,53 @@ class Category extends BaseEntity {
   @OneToMany(() => Lp, (lp) => lp.category)
   lps!: Lp[];
 
-  constructor(category?: Category) {
+  constructor(category?: Partial<Category>) {
     super();
+
     if (category) {
+      if (!category.title) {
+        throw new Error("Category title cannot be empty.");
+      }
       this.title = category.title;
     }
   }
 
-  static async saveNewCategory(categoryData: any): Promise<Category> {
+  static async saveNewCategory(
+    categoryData: Partial<Category>
+  ): Promise<Category> {
+    //Partial<Category> will allow to check the existing or empty title value
+    if (!categoryData.title) {
+      throw new Error("Category title cannot be empty.");
+    }
+
+    // checks via private method that a category with this title doesn't already exist
+    const existingCategory = await Category.getCategoryByTitle(
+      categoryData.title
+    );
+    if (existingCategory) {
+      return existingCategory;
+    }
+
     const newCategory = new Category(categoryData);
     const savedCategory = await newCategory.save();
+
+    console.log(
+      `New category saved: ${savedCategory.getStringRepresentation()}.`
+    );
+
     return savedCategory;
+  }
+
+  // private means that this method will only be used by this class
+  private static async getCategoryByTitle(
+    title: string
+  ): Promise<Category | null> {
+    const category = await Category.findOneBy({ title });
+    return category;
+  }
+
+  getStringRepresentation(): string {
+    return `${this.id} - ${this.title}`;
   }
 
   static async getAllCategories(): Promise<Category[]> {

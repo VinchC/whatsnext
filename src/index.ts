@@ -23,6 +23,10 @@ const db = new Database("db.sqlite"); // defines a new sqlite database via its d
 // used to check that the server is working
 app.listen(port, async () => {
   await appDataSource.initialize(); // connects to database at the launch of the app
+  await Category.saveNewCategory({ title: "East Coast" });
+  await Category.saveNewCategory({ title: "West Coast" });
+  await Category.saveNewCategory({ title: "Classical" });
+  await Category.saveNewCategory({ title: "Jazz" });
   console.log(`Server is listening on port ${port}`);
 });
 
