@@ -4,7 +4,9 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  ManyToOne,
 } from "typeorm";
+import Category from "./Category";
 
 // defines the object with its attributes and methods
 // implements clause is only a check that the class can be treated as the interface type - it doesn’t change the type of the class or its methods
@@ -34,31 +36,70 @@ class Lp extends BaseEntity {
   @CreateDateColumn()
   createdAt!: Date;
 
+  // () => Category = Many lps to One Category
+  // inverse side => (category) => category.lps = one category is linked to many lps
+  // { eager: true } only works when using find* methods - it allows when loading the entity to load automatically the entities linked to it
+  @ManyToOne(() => Category, (category) => category.lps, { eager: true })
+  category!: Category;
+
   // constructor defines which attributes are mandatory when a new object is created and uses the TypeLp defined above to ensure correct types are used
-  constructor(lp?: Lp) {
+  constructor(lp?: Partial<Lp>) {
     super(); // super() marks the inheritance of the BaseEntity class
     if (lp) {
+      // !lp... enforces the non-nullable property of fields below
+      if (!lp.title) {
+        throw new Error("Title must not be empty.");
+      }
       this.title = lp.title;
+
+      if (!lp.artist) {
+        throw new Error("Artist must not be empty.");
+      }
       this.artist = lp.artist;
 
       if (lp.description) {
         this.description = lp.description;
       }
+
       if (lp.release_year) {
         this.release_year = lp.release_year;
       }
+
       if (lp.picture) {
         this.picture = lp.picture;
       }
+
       if (lp.label) {
         this.label = lp.label;
       }
     }
   }
 
+  static async saveNewLp(
+    lpData: Partial<Lp> & { categoryId?: number }
+  ): Promise<Lp> {
+    // Partial indicates that some properties are optional
+    // categoryId? is not mandatory
+    // Promise indicates the completion of an asynchronous operation
+    const newLp = new Lp(lpData); // new object Lp is created with the data received which is checked by entity logic (type, constructor)
+
+    // if categoryId is indicated, it is recovered and applied as a property to the new object via the variable category
+    if (lpData.categoryId) {
+      const category = await Category.getCategoryById(lpData.categoryId);
+      newLp.category = category;
+    }
+
+    const savedLp = await newLp.save(); // pushes the new data to the database - save is a method of the model
+
+    console.log(`New Lp created: ${savedLp.getStringRepresentation()}.`);
+
+    return savedLp;
+  }
+
   // returns an array of items
   static async getAllLps(): Promise<Lp[]> {
     // constructor must indicate lp? in case there are no existing values to return
+    // finding an array of lps with find takes argument which is the relation to the entity
     const lps = await Lp.find(); // find is a method of the model
 
     return lps;
@@ -66,26 +107,16 @@ class Lp extends BaseEntity {
 
   // returns an item
   static async getLpById(id: number): Promise<Lp> {
-    const lp = await Lp.findOneBy({ id }); // findOneBy is a method of the model
+    // finding a lp with findOne takes two arguments : where (id) and relations to the entity
+    const lp = await Lp.findOne({
+      where: { id },
+    });
+
     if (!lp) {
       throw new Error(`Lp with ID ${id} does not exist.`);
     }
 
     return lp;
-  }
-
-  getStringRepresentation(): string {
-    return `${this.artist} - ${this.title}`;
-  }
-
-  static async saveNewLp(lpData: any): Promise<Lp> {
-    // Promise indicates the completion of an asynchronous operation
-    const newLp = new Lp(lpData); // new object Lp is created with the data received which is checked by entity logic (type, constructor)
-
-    const savedLp = await newLp.save(); // pushes the new data to the database - save is a method of the model
-
-    console.log(`New Lp created: ${savedLp.getStringRepresentation()}.`);
-    return savedLp;
   }
 
   static async deleteLp(id: number): Promise<void> {
@@ -97,15 +128,26 @@ class Lp extends BaseEntity {
   }
 
   // updates the item thanks to a sequence of three different functions (entity getLpById - model update - model reload)
-  static async updateLp(id: number, partialLp: Partial<Lp>): Promise<Lp> {
+  static async updateLp(
+    id: number,
+    partialLp: Partial<Lp> & { category?: number }
+  ): Promise<Lp> {
     // uses as parameters the id and the (partial) data received
     const lp = await Lp.getLpById(id); // uses the entity method to save time
+
+    if (partialLp.category) {
+      await Category.getCategoryById(partialLp.category);
+    }
 
     await Lp.update(id, partialLp); // updates the Lp object in database - update is a method of the model
 
     await lp.reload(); // reloads entity data from the database
 
     return lp;
+  }
+
+  getStringRepresentation(): string {
+    return `${this.artist} - ${this.title}`;
   }
 }
 
