@@ -76,7 +76,7 @@ class Lp extends BaseEntity {
   }
 
   static async saveNewLp(
-    lpData: Partial<Lp> & { category?: number; tags?: [] } // gets the possible tag(s) if any
+    lpData: Partial<Lp> & { category?: number; tags?: number[] } // gets the possible tag(s) if any
   ): Promise<Lp> {
     const newLp = new Lp(lpData);
     if (lpData.category) {
@@ -136,17 +136,25 @@ class Lp extends BaseEntity {
 
   static async updateLp(
     id: number,
-    partialLp: Partial<Lp> & { category?: number }
+    partialLp: Partial<Lp> & { category?: number; tags?: number[] }
   ): Promise<Lp> {
     const lp = await Lp.getLpById(id);
+
+    // Object.assign() => copy the values of all of the enumerable own properties from one or more source objects (partialLp) to a target object (lp). Returns the target object (lp).
+    Object.assign(lp, partialLp);
 
     if (partialLp.category) {
       await Category.getCategoryById(partialLp.category);
     }
 
-    await Lp.update(id, partialLp);
+    if (partialLp.tags) {
+      lp.tags = await Promise.all(partialLp.tags.map(Tag.getTagById));
+    }
 
-    await lp.reload();
+    // Lp has been replaced with lp via Object.assign() which returns lp
+    await lp.save();
+
+    lp.reload();
 
     return lp;
   }
