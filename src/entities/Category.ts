@@ -23,6 +23,7 @@ class Category extends BaseEntity {
   constructor(category?: Partial<Category>) {
     super();
 
+    // !lp... enforces the non-nullable property of fields below
     if (category) {
       if (!category.title) {
         throw new Error("Category title cannot be empty.");
@@ -35,6 +36,7 @@ class Category extends BaseEntity {
     categoryData: Partial<Category>
   ): Promise<Category> {
     //Partial<Category> will allow to check the existing or empty title value
+
     if (!categoryData.title) {
       throw new Error("Category title cannot be empty.");
     }

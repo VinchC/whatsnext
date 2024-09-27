@@ -56,7 +56,7 @@ app.get("/lps/:id", async (req, res) => {
 
   try {
     const lp = await Lp.getLpById(id); // call of the entity method (instead of having to write the SQL query SELECT... WHERE...) which will call the model
-    return res.json({ lp }); // returns the deleted item
+    return res.json({ lp }); // returns the chosen item
   } catch (error) {
     if (isError(error)) {
       return res.status(404).json({ error: error.message });
@@ -108,14 +108,6 @@ app.delete("/categories/:id", async (req, res) => {
 app.post("/lps", async (req, res) => {
   const lpData = req.body; // gets the data sent by the client
 
-  // enforces the non-nullable property of fields below
-  if (!lpData.title) {
-    return res.status(400).json({ error: "Title cannot be empty." });
-  }
-  if (!lpData.artist) {
-    return res.status(400).json({ error: "Artist cannot be empty." });
-  }
-
   const savedLp = await Lp.saveNewLp(lpData); // call of the entity method (instead of having to write the SQL query INSERT INTO...) which will call the model
 
   return res.status(201).json({ lp: savedLp }); // returns the new json property (lp) which value is the newly savedLp object
@@ -123,10 +115,6 @@ app.post("/lps", async (req, res) => {
 
 app.post("/categories", async (req, res) => {
   const categoryData = req.body;
-
-  if (!categoryData.title) {
-    return res.status(400).json({ error: "Title cannot be empty." });
-  }
 
   const savedCategory = await Category.saveNewCategory(categoryData);
 
