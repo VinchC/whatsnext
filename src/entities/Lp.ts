@@ -40,12 +40,12 @@ class Lp extends BaseEntity {
   @ManyToOne(() => Category, (category) => category.lps, { eager: true })
   category!: Category;
 
-  @JoinTable({ name: "lps_tags"}) // will create the join table - decorator should be put on only one of the two entities related
-  @ManyToMany(() => Tag, (tag) => tag.lps, {eager: true} )
-  tags!: Tag[]
+  @JoinTable({ name: "lps_tags" }) // will create the join table - decorator should be put on only one of the two entities related
+  @ManyToMany(() => Tag, (tag) => tag.lps, { eager: true })
+  tags!: Tag[];
 
   constructor(lp?: Partial<Lp>) {
-    super(); 
+    super();
     if (lp) {
       if (!lp.title) {
         throw new Error("Title must not be empty.");
@@ -76,17 +76,29 @@ class Lp extends BaseEntity {
   }
 
   static async saveNewLp(
-    lpData: Partial<Lp> & { category?: number } & { tags?: []}
+    lpData: Partial<Lp> & { category?: number; tags?: [] } // gets the possible tag(s) if any
   ): Promise<Lp> {
-    const newLp = new Lp(lpData); 
+    const newLp = new Lp(lpData);
     if (lpData.category) {
       const category = await Category.getCategoryById(lpData.category);
       newLp.category = category;
     }
 
+    // Two ways : first one is longer
+    // const associatedTags = [];
+    // create an empty array that will register the tag(s) of the item
+
     if (lpData.tags) {
-      const tags = await Tag.getAllTags();
-      newLp.tags = tags;
+      //   creates a loop that will get the possible tag ids which will be pushed in the dedicated array
+      //   for (const tagId of lpData.tags) {
+      //     const tag = await Tag.getTagById(tagId);
+      //     associatedTags.push(tag);
+      //   }
+
+      // Second way
+      // Promise.all will call each function in the array and resolve when all are resolved
+      // In that case it will map each tag
+      newLp.tags = await Promise.all(lpData.tags.map(Tag.getTagById));
     }
 
     const savedLp = await newLp.save();

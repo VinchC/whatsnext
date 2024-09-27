@@ -36,7 +36,7 @@ class Tag extends BaseEntity {
 
     const existingTag = await Tag.getTagByTitle(tagData.title);
     if (existingTag) {
-      return existingTag;
+      throw Error(`Tag with name "${tagData.title}" already exists.`);
     }
 
     const newtag = new Tag(tagData);

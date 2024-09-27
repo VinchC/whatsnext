@@ -131,15 +131,22 @@ app.delete("/tags/:id", async (req, res) => {
 app.post("/lps", async (req, res) => {
   const lpData = req.body;
 
-  const savedLp = await Lp.saveNewLp(lpData);
-
-  return res.status(201).json({ lp: savedLp });
+  try {
+    const savedLp = await Lp.saveNewLp(lpData);
+    return res.status(201).json({ lp: savedLp });
+  } catch (error) {
+    if (isError(error)) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
 });
 
 app.post("/categories", async (req, res) => {
   const categoryData = req.body;
 
-  const savedCategory = await Category.saveNewCategoryIfNotExisting(categoryData);
+  const savedCategory = await Category.saveNewCategoryIfNotExisting(
+    categoryData
+  );
 
   return res.status(201).json({ category: savedCategory });
 });
@@ -147,9 +154,14 @@ app.post("/categories", async (req, res) => {
 app.post("/tags", async (req, res) => {
   const tagData = req.body;
 
-  const savedTag = await Tag.saveNewTag(tagData);
-
-  return res.status(201).json({ tag: savedTag });
+  try {
+    const savedTag = await Tag.saveNewTag(tagData);
+    return res.status(201).json({ tag: savedTag });
+  } catch (error) {
+    if (isError(error)) {
+      return res.status(400).json({ error: error.message });
+    }
+  }
 });
 
 app.put("/lps/:id", async (req, res) => {
@@ -162,7 +174,7 @@ app.put("/lps/:id", async (req, res) => {
     return res.status(204).json({ lp: updatedLp });
   } catch (error) {
     if (isError(error)) {
-      return res.status(404).json({ error: error.message });
+      return res.status(400).json({ error: error.message });
     }
   }
 });

@@ -2,7 +2,7 @@ POST http://localhost:4000/lps
 Content-Type: application/json
 
    {
-    "title": "thirdTag",
+    "title": "test for tags",
     "description": "aaaaaaaaaaaa",
     "artist": "first",
     "release_year": 4567,
