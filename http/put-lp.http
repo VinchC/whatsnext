@@ -2,5 +2,6 @@ PUT http://localhost:4000/lps/1
 Content-Type: application/json
 
 {
-  "category": 4
+  "category": 4,
+  "tags": [3]
 }

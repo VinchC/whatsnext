@@ -1,0 +1,7 @@
+POST http://localhost:4000/tags
+Content-Type: application/json
+
+  {
+    "title": "To erase tag"
+  }
+  

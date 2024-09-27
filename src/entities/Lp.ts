@@ -5,8 +5,11 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   ManyToOne,
+  ManyToMany,
+  JoinTable,
 } from "typeorm";
 import Category from "./Category";
+import Tag from "./Tag";
 
 @Entity()
 class Lp extends BaseEntity {
@@ -36,6 +39,10 @@ class Lp extends BaseEntity {
 
   @ManyToOne(() => Category, (category) => category.lps, { eager: true })
   category!: Category;
+
+  @JoinTable({ name: "lps_tags"}) // will create the join table - decorator should be put on only one of the two entities related
+  @ManyToMany(() => Tag, (tag) => tag.lps, {eager: true} )
+  tags!: Tag[]
 
   constructor(lp?: Partial<Lp>) {
     super(); 
@@ -69,12 +76,17 @@ class Lp extends BaseEntity {
   }
 
   static async saveNewLp(
-    lpData: Partial<Lp> & { categoryId?: number }
+    lpData: Partial<Lp> & { category?: number } & { tags?: []}
   ): Promise<Lp> {
     const newLp = new Lp(lpData); 
-    if (lpData.categoryId) {
-      const category = await Category.getCategoryById(lpData.categoryId);
+    if (lpData.category) {
+      const category = await Category.getCategoryById(lpData.category);
       newLp.category = category;
+    }
+
+    if (lpData.tags) {
+      const tags = await Tag.getAllTags();
+      newLp.tags = tags;
     }
 
     const savedLp = await newLp.save();
