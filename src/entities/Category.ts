@@ -1,4 +1,11 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import Lp from "./Lp";
 
 @Entity()
 class Category extends BaseEntity {
@@ -7,6 +14,11 @@ class Category extends BaseEntity {
 
   @Column({ unique: true })
   title!: string;
+
+  // () => Lp = a category is linked to many lps
+  // inverse side => one lp is linked to one category
+  @OneToMany(() => Lp, (lp) => lp.category)
+  lps!: Lp[];
 
   constructor(category?: Category) {
     super();

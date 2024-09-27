@@ -4,7 +4,9 @@ import {
   CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
+  ManyToOne,
 } from "typeorm";
+import Category from "./Category";
 
 // defines the object with its attributes and methods
 // implements clause is only a check that the class can be treated as the interface type - it doesn’t change the type of the class or its methods
@@ -33,6 +35,11 @@ class Lp extends BaseEntity {
 
   @CreateDateColumn()
   createdAt!: Date;
+
+  // () => Category = Many lps to One Category
+  // inverse side => (category) => category.lps = one category is linked to many lps
+  @ManyToOne(() => Category, (category) => category.lps)
+  category!: Category;
 
   // constructor defines which attributes are mandatory when a new object is created and uses the TypeLp defined above to ensure correct types are used
   constructor(lp?: Lp) {
@@ -65,7 +72,7 @@ class Lp extends BaseEntity {
     console.log(`New Lp created: ${savedLp.getStringRepresentation()}.`);
     return savedLp;
   }
-  
+
   // returns an array of items
   static async getAllLps(): Promise<Lp[]> {
     // constructor must indicate lp? in case there are no existing values to return
@@ -87,7 +94,6 @@ class Lp extends BaseEntity {
   getStringRepresentation(): string {
     return `${this.artist} - ${this.title}`;
   }
-
 
   static async deleteLp(id: number): Promise<void> {
     const { affected } = await Lp.delete(id); // { affected } represents any number of rows affected by the query - delete is a method of the model
