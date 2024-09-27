@@ -15,15 +15,12 @@ class Category extends BaseEntity {
   @Column({ unique: true })
   title!: string;
 
-  // () => Lp = a category is linked to many lps
-  // inverse side => one lp is linked to one category
   @OneToMany(() => Lp, (lp) => lp.category)
   lps!: Lp[];
 
   constructor(category?: Partial<Category>) {
     super();
 
-    // !lp... enforces the non-nullable property of fields below
     if (category) {
       if (!category.title) {
         throw new Error("Category title cannot be empty.");
@@ -32,16 +29,13 @@ class Category extends BaseEntity {
     }
   }
 
-  static async saveNewCategory(
+  static async saveNewCategoryIfNotExisting(
     categoryData: Partial<Category>
   ): Promise<Category> {
-    //Partial<Category> will allow to check the existing or empty title value
-
     if (!categoryData.title) {
       throw new Error("Category title cannot be empty.");
     }
 
-    // checks via private method that a category with this title doesn't already exist
     const existingCategory = await Category.getCategoryByTitle(
       categoryData.title
     );
@@ -59,7 +53,6 @@ class Category extends BaseEntity {
     return savedCategory;
   }
 
-  // private means that this method will only be used by this class
   private static async getCategoryByTitle(
     title: string
   ): Promise<Category | null> {

@@ -5,14 +5,3 @@ Content-Type: application/json
   #   "title": "East Coast"
   # }
   
-  # {
-  #   "title": "West Coast"
-  # }
-
-  # {
-  #   "title": "Rock"
-  # }
-
-  {
-    "title": "Classical"
-  }
