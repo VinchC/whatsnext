@@ -38,7 +38,8 @@ class Lp extends BaseEntity {
 
   // () => Category = Many lps to One Category
   // inverse side => (category) => category.lps = one category is linked to many lps
-  @ManyToOne(() => Category, (category) => category.lps)
+  // { eager: true } only works when using find* methods - it allows when loading the entity to load automatically the entities linked to it
+  @ManyToOne(() => Category, (category) => category.lps, { eager: true })
   category!: Category;
 
   // constructor defines which attributes are mandatory when a new object is created and uses the TypeLp defined above to ensure correct types are used
@@ -99,7 +100,7 @@ class Lp extends BaseEntity {
   static async getAllLps(): Promise<Lp[]> {
     // constructor must indicate lp? in case there are no existing values to return
     // finding an array of lps with find takes argument which is the relation to the entity
-    const lps = await Lp.find({ relations: { category: true } }); // find is a method of the model
+    const lps = await Lp.find(); // find is a method of the model
 
     return lps;
   }
@@ -109,7 +110,6 @@ class Lp extends BaseEntity {
     // finding a lp with findOne takes two arguments : where (id) and relations to the entity
     const lp = await Lp.findOne({
       where: { id },
-      relations: { category: true },
     });
 
     if (!lp) {
