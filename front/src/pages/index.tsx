@@ -70,7 +70,6 @@ export default function Home() {
           <a href="" className="category-navigation-link">
             Classique
           </a>{" "}
-          •
         </nav>
       </header>
 
@@ -80,7 +79,10 @@ export default function Home() {
         <section className="recent-lps">
           <div className="lp-card-container">
             <a className="lp-card-link" href="/lps/blackmoonstage">
-              <img className="lp-card-image" src="/images/black_moon_stage.jpg" />
+              <img
+                className="lp-card-image"
+                src="/images/black_moon_stage.jpg"
+              />
               <div className="lp-card-text">
                 <div className="lp-card-title">Black Moon - Enta da Stage</div>
                 <div className="lp-card-price">1OO €</div>
