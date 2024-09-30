@@ -5,10 +5,10 @@ Content-Type: application/json
     "title": "new test for tags",
     "description": "aaaaaaaaaaaa",
     "artist": "first",
-    "release_year": 4567,
+    "release_year": 80,
     "picture":
       "aaaaaaaaaaaaaaaa",
     "label": "aaaaaaa",
     "category": 1,
-    "tags": [2, 3]
+    "tags": [1]
   }

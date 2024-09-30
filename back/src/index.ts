@@ -24,7 +24,7 @@ app.listen(port, async () => {
   await appDataSource.initialize();
   await Category.saveNewCategoryIfNotExisting({ title: "East Coast" });
   await Category.saveNewCategoryIfNotExisting({ title: "West Coast" });
-  await Category.saveNewCategoryIfNotExisting({ title: "Classical" });
+  await Category.saveNewCategoryIfNotExisting({ title: "Classique" });
   await Category.saveNewCategoryIfNotExisting({ title: "Jazz" });
   console.log(`Server is listening on port ${port}`);
 });
