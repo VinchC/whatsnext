@@ -11,4 +11,5 @@ From commit 38caf161e838d04d767569d89e3c0799b1338bd9 :
 
 From commit 422691a9426a3ef6a9898972128d606295e3c6f4
 
+In front_continued - Create from scratch
 - a Layout component with a Header subcomponent, and children passed in it (\_app > Layout > Header and { children })
