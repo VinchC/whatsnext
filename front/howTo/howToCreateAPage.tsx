@@ -1,4 +1,4 @@
-// create a folder after the name of the page
+// create a folder after the name of the page => categories/[id]
 // create a file named [id] which will be the template for all future pages
 
 // import the function that allows to read the route's dynamic params
