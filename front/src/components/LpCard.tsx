@@ -1,6 +1,8 @@
+// it will be used in the index file
+
 import Link from "next/link";
 
-export function LpCard({
+export default function LpCard({
   id,
   title,
   price,
@@ -12,13 +14,13 @@ export function LpCard({
   return (
     <>
       <div className="lp-card-container">
-        <img className="lp-card-image" src="/images/black_moon_stage.jpg" />
-        <div className="lp-card-text">
-          <Link href={`lps/${id}`} className="lp-card-title">
-            {title}
-          </Link>
-          <div className="lp-card-price">{price}</div>
-        </div>
+        <Link className="lp-card-title" href={`/lps/${id}`}>
+          <img className="lp-card-image" src={`/images/${id}.webp`} />
+          <div className="lp-card-text">
+            <div className="lp-card-title">{title}</div>
+            <div className="lp-card-price">{price}</div>
+          </div>
+        </Link>
       </div>
     </>
   );

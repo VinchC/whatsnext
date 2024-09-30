@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-export function DisplayLinkToCategory({
+export default function DisplayLinkToCategory({
   id,
   title,
 }: {
@@ -11,7 +11,7 @@ export function DisplayLinkToCategory({
 }) {
   return (
     <>
-      <Link href={`categories/${id}`} className="category-navigation-link">
+      <Link href={`/categories/${id}`} className="category-navigation-link">
         {title}
       </Link>
     </>

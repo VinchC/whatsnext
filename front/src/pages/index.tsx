@@ -1,7 +1,7 @@
-import Head from "next/head";
-import { DisplayLinkToCategory } from "@/components/DisplayLinkToCategory";
-import { LpCard } from "@/components/LpCard";
 import { Fragment } from "react";
+import Head from "next/head";
+import DisplayLinkToCategory from "@/components/DisplayLinkToCategory";
+import LpCard from "@/components/LpCard";
 
 const CATEGORIES = [
   {
@@ -29,17 +29,17 @@ const CATEGORIES = [
 const LPS = [
   {
     id: 1,
-    title: "First title",
+    title: "Black Moon - Enta Da Stage",
     price: 10,
   },
   {
     id: 2,
-    title: "Second title",
+    title: "Dr Dre - The Chronic",
     price: 20,
   },
   {
     id: 3,
-    title: "Third title",
+    title: "Wu-Tang Clan - Enter the Wu-Tang (36 Chambers)",
     price: 30,
   },
 ];
@@ -116,7 +116,6 @@ export default function Home() {
           {LPS.map((lp, index) => (
             <Fragment key={lp.id}>
               <LpCard id={lp.id} title={lp.title} price={lp.price} />
-              {index < LPS.length - 1 ? " ** " : ""}
             </Fragment>
           ))}
         </section>
