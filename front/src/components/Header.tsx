@@ -2,6 +2,7 @@
 
 import { Fragment } from "react";
 import DisplayLinkToCategory from "@/components/DisplayLinkToCategory";
+import Link from "next/link";
 
 export default function Header() {
   const CATEGORIES = [
@@ -33,10 +34,10 @@ export default function Header() {
       <header className="header">
         <div className="main-menu">
           <h1>
-            <a href="/" className="button logo link-button">
+            <Link href="/" className="button logo link-button">
               <span className="mobile-short-label">WN</span>
               <span className="desktop-long-label">WHAT'S NEXT</span>
-            </a>
+            </Link>
           </h1>
 
           {/* searchbar */}
