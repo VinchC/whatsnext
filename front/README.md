@@ -1,3 +1,30 @@
+## Create Next project
+- https://github.com/vercel/next.js/tree/canary/packages/create-next-app
+- node --version to check if node is installed and its current version
+- npx create-next-app@latest with default options
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
