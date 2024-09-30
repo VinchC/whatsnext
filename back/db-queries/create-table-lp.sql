@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS lp (
   title VARCHAR(150) NOT NULL,
   description TEXT,
   artist VARCHAR(150) NOT NULL,
-  release_year INT,
+  price INT,
   picture TEXT,
   label VARCHAR(150),
   createdAt INTEGER,

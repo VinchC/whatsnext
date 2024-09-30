@@ -26,7 +26,7 @@ class Lp extends BaseEntity {
   artist!: string;
 
   @Column({ nullable: true })
-  release_year!: number;
+  price!: number;
 
   @Column({ default: "" })
   picture!: string;
@@ -61,8 +61,8 @@ class Lp extends BaseEntity {
         this.description = lp.description;
       }
 
-      if (lp.release_year) {
-        this.release_year = lp.release_year;
+      if (lp.price) {
+        this.price = lp.price;
       }
 
       if (lp.picture) {
