@@ -40,7 +40,7 @@ class Lp extends BaseEntity {
   @ManyToOne(() => Category, (category) => category.lps, { eager: true })
   category!: Category;
 
-  @JoinTable({ name: "lps_tags" }) // will create the join table - decorator should be put on only one of the two entities related
+  @JoinTable({ name: "lps_tags" })
   @ManyToMany(() => Tag, (tag) => tag.lps, { eager: true })
   tags!: Tag[];
 
@@ -76,7 +76,7 @@ class Lp extends BaseEntity {
   }
 
   static async saveNewLp(
-    lpData: Partial<Lp> & { category?: number; tags?: number[] } // gets the possible tag(s) if any
+    lpData: Partial<Lp> & { category?: number; tags?: number[] }
   ): Promise<Lp> {
     const newLp = new Lp(lpData);
     if (lpData.category) {
@@ -84,20 +84,7 @@ class Lp extends BaseEntity {
       newLp.category = category;
     }
 
-    // Two ways : first one is longer
-    // const associatedTags = [];
-    // create an empty array that will register the tag(s) of the item
-
     if (lpData.tags) {
-      //   creates a loop that will get the possible tag ids which will be pushed in the dedicated array
-      //   for (const tagId of lpData.tags) {
-      //     const tag = await Tag.getTagById(tagId);
-      //     associatedTags.push(tag);
-      //   }
-
-      // Second way
-      // Promise.all will call each function in the array and resolve when all are resolved
-      // In that case it will map each tag
       newLp.tags = await Promise.all(lpData.tags.map(Tag.getTagById));
     }
 
@@ -140,7 +127,6 @@ class Lp extends BaseEntity {
   ): Promise<Lp> {
     const lp = await Lp.getLpById(id);
 
-    // Object.assign() => copy the values of all of the enumerable own properties from one or more source objects (partialLp) to a target object (lp). Returns the target object (lp).
     Object.assign(lp, partialLp);
 
     if (partialLp.category) {
@@ -151,7 +137,6 @@ class Lp extends BaseEntity {
       lp.tags = await Promise.all(partialLp.tags.map(Tag.getTagById));
     }
 
-    // Lp has been replaced with lp via Object.assign() which returns lp
     await lp.save();
 
     lp.reload();
