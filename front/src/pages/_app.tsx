@@ -4,7 +4,6 @@ import type { AppProps } from "next/app";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      {/* Layout will include every  other component of the future page */}
       <Layout>
         <Component {...pageProps} />
       </Layout>

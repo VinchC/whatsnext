@@ -1,5 +1,3 @@
-// contains every element of the navbar and will be exported in the Layout parent component
-
 import { Fragment } from "react";
 import DisplayLinkToCategory from "@/components/DisplayLinkToCategory";
 import Link from "next/link";
