@@ -1,2 +1,2 @@
-run :
-	npm i && npm audit && npm run dev
+run-back :
+	cd back && (npm i && npm audit && npm run dev)

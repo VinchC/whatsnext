@@ -63,7 +63,7 @@ configure Prettier on a common model to avoid different formatting implementatio
 
 create dev mode with build:watch and start:watch scripts to avoid restaring server
 
-create Makefile to add shortened scripts
+create Makefile to add shortened scripts and launch the application
 
 create .env file to use secret environment variables (needs 'dotenv' package to use process.env.VARIABLE_NAME)
 

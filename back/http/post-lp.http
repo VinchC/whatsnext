@@ -10,5 +10,5 @@ Content-Type: application/json
       "aaaaaaaaaaaaaaaa",
     "label": "aaaaaaa",
     "category": 1,
-    "tags": [2, 3]
+    "tags": [1]
   }
