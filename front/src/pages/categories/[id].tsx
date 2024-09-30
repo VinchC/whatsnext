@@ -3,7 +3,12 @@
 import { useParams } from "next/navigation";
 
 export default function Category() {
-  const { id } = useParams();
+  const id = useParams();
 
-  return `page catégorie ${id}`;
+  return (
+    <>
+      <p>{`page catégorie ${id}`}</p>
+      <a href="/">Home</a>
+    </>
+  );
 }

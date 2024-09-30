@@ -10,8 +10,10 @@ export function DisplayLinkToCategory({
   title: string;
 }) {
   return (
-    <Link href={`categories/${id}`} className="category-navigation-link">
-      {title}
-    </Link>
+    <>
+      <Link href={`categories/${id}`} className="category-navigation-link">
+        {title}
+      </Link>
+    </>
   );
 }

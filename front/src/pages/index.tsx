@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { DisplayLinkToCategory } from "@/components/DisplayLinkToCategory";
+import { LpCard } from "@/components/LpCard";
 import { Fragment } from "react";
 
 const CATEGORIES = [
@@ -22,6 +23,24 @@ const CATEGORIES = [
   {
     id: 5,
     title: "Blues",
+  },
+];
+
+const LPS = [
+  {
+    id: 1,
+    title: "First title",
+    price: 10,
+  },
+  {
+    id: 2,
+    title: "Second title",
+    price: 20,
+  },
+  {
+    id: 3,
+    title: "Third title",
+    price: 30,
   },
 ];
 
@@ -94,18 +113,12 @@ export default function Home() {
       <main className="main-content">
         <h2>Ajouts récents</h2>
         <section className="recent-lps">
-          <div className="lp-card-container">
-            <a className="lp-card-link" href="/lps/blackmoonstage">
-              <img
-                className="lp-card-image"
-                src="/images/black_moon_stage.jpg"
-              />
-              <div className="lp-card-text">
-                <div className="lp-card-title">Black Moon - Enta da Stage</div>
-                <div className="lp-card-price">1OO €</div>
-              </div>
-            </a>
-          </div>
+          {LPS.map((lp, index) => (
+            <Fragment key={lp.id}>
+              <LpCard id={lp.id} title={lp.title} price={lp.price} />
+              {index < LPS.length - 1 ? " ** " : ""}
+            </Fragment>
+          ))}
         </section>
       </main>
     </>
