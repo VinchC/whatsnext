@@ -1,11 +1,12 @@
 import { useParams } from "next/navigation";
 
 export default function Category() {
-  const id = useParams();
+  const params = useParams();
+  const id = params?.id;
 
   return (
     <>
-      <p>{`page catégorie ${id}`}</p>
+      <p>{id ? `page catégorie ${id}` : "Loading..."}</p>
       <a href="/">Home</a>
     </>
   );
