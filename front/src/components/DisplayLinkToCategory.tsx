@@ -1,5 +1,3 @@
-// it will be used in the index file
-
 import Link from "next/link";
 
 export default function DisplayLinkToCategory({

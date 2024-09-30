@@ -96,13 +96,9 @@ export default function Home() {
         </div>
         {/* navbar with categories implemented directly in file*/}
         <nav className="categories-navigation">
-          {/* maps the array defined above and creates a Fragment for each item */}
           {CATEGORIES.map((category, index) => (
-            // "Fragment" must be indicated to allow use of the key
             <Fragment key={category.id}>
-              {/* the Fragment will use a component that will send via props the parameters mandatory for the function to work */}
               <DisplayLinkToCategory id={category.id} title={category.title} />
-              {/* ternary function that will display (or not) a symbol between each element of the array */}
               {index < CATEGORIES.length - 1 ? " || " : ""}
             </Fragment>
           ))}
