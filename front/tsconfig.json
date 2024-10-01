@@ -17,6 +17,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "howTo/howToCreateAComponent.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "howToCreate/aComponent.tsx"],
   "exclude": ["node_modules"]
 }
