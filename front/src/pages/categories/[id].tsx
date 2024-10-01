@@ -7,7 +7,6 @@ export default function Category() {
   return (
     <>
       <p>{id ? `page catégorie ${id}` : "Loading..."}</p>
-      <a href="/">Home</a>
     </>
   );
 }

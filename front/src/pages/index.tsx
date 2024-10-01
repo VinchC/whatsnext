@@ -1,4 +1,5 @@
-import LpCard from "@/components/LpCard";
+import LpCard from "@/components/LpCard/LpCard";
+import { CardGrid } from "@/components/CardGrid/CardGrid";
 
 const LPS = [
   {
@@ -21,14 +22,13 @@ const LPS = [
 export default function Home() {
   return (
     <>
-      {/* main content of the page */}
       <main className="main-content">
         <h2>Ajouts récents</h2>
-        <section className="recent-lps">
+        <CardGrid>
           {LPS.map((lp) => (
-              <LpCard key={lp.id} id={lp.id} title={lp.title} price={lp.price} />
+            <LpCard key={lp.id} id={lp.id} title={lp.title} price={lp.price} />
           ))}
-        </section>
+        </CardGrid>
       </main>
     </>
   );

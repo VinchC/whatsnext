@@ -1,6 +1,8 @@
 import { ReactNode } from "react";
 import Head from "next/head";
-import Header from "./Header";
+
+import Header from "../Header/Header";
+import { MainContent } from "./Layout.styled";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -18,7 +20,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <Header />
 
       {/* the children  of the Layout are rendered here */}
-      <div>{children}</div>
+      <MainContent>{children}</MainContent>
     </>
   );
 }
