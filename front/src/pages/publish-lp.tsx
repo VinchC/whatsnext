@@ -1,48 +1,51 @@
-import PrimaryButton from "@/components/Button/PrimaryButton";
+import { PrimaryButton } from "@/components/Button/PrimaryButton";
+import { Form } from "@/components/FormElements/Form/Form";
+import {
+  FormLabelWithField,
+  TextArea,
+  TextField,
+} from "@/components/FormElements/Input/Input";
+import React from "react";
+
 export default function PublishLpForm() {
   const createLp = () => {
     // to complete with /post-lp
   };
   return (
     <>
-      <main className="main-content">
-        {/* to benefit from the CSS */}
-        <form
-          className="form" // every html tag should have a className
-          onSubmit={(event) => {
-            event.preventDefault(); // the event must be explicitely handled
-            createLp(); // function that is triggered by the user's action
-          }}
-        >
-          <label className="form-label-with-field">
-            Photo {/* label allows to give the field a title*/}
-            <input className="text-field" type="file" />{" "}
-            {/* type defines the data sent (text, number, file, email etc. */}
-          </label>
-          <label className="form-label-with-field">
-            Titre
-            <input className="text-field" type="text" required minLength={4} />
-          </label>
-          <label className="form-label-with-field">
-            Prix
-            <input className="text-field" type="number" required min={0} />
-          </label>
-          <label className="form-label-with-field">
-            Description
-            <textarea className="text-field" text-area />{" "}
-            {/* textarea represents a multi-line plain-text editing control */}
-          </label>
-          <label className="form-label-with-field">
-            Artiste
-            <input className="text-field" type="email" required />
-          </label>
-          <label className="form-label-with-field">
-            Label
-            <input className="text-field" type="text" />
-          </label>
-          <PrimaryButton>Créer un lp</PrimaryButton>
-        </form>
-      </main>
+      <Form
+        className="form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          createLp();
+        }}
+      >
+        <FormLabelWithField>
+          Photo
+          <TextField type="file" />
+        </FormLabelWithField>
+        <FormLabelWithField>
+          Titre
+          <TextField type="text" required minLength={4} />
+        </FormLabelWithField>
+        <FormLabelWithField>
+          Prix
+          <TextField type="number" required min={0} />
+        </FormLabelWithField>
+        <FormLabelWithField>
+          Description
+          <TextArea />
+        </FormLabelWithField>
+        <FormLabelWithField>
+          Artiste
+          <TextField type="email" required />
+        </FormLabelWithField>
+        <FormLabelWithField>
+          Label
+          <TextField type="text" />
+        </FormLabelWithField>
+        <PrimaryButton>Publier l'annonce</PrimaryButton>
+      </Form>
     </>
   );
 }
