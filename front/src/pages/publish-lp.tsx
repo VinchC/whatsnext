@@ -14,7 +14,6 @@ export default function PublishLpForm() {
   return (
     <>
       <Form
-        className="form"
         onSubmit={(event) => {
           event.preventDefault();
           createLp();

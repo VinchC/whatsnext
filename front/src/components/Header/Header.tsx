@@ -6,6 +6,7 @@ import * as styled from "./Header.styled";
 import { ButtonLikeLink, Logo } from "../Link/ButtonLikeLink";
 import { MainSearchField } from "../FormElements/Input/Input";
 import { BaseLink } from "../Link/BaseLink";
+import ResponsiveLabel from "../ResponsiveLabel/ResponsiveLabel";
 
 export default function Header() {
   const CATEGORIES = [
@@ -36,8 +37,7 @@ export default function Header() {
       <styled.MainMenu>
         <styled.MainTitle>
           <Logo href="/">
-            <span className="mobile-short-label">WN</span>
-            <span className="desktop-long-label">WHAT'S NEXT</span>
+          <ResponsiveLabel mobileLabel="WN" desktopLabel="WHAT'S NEXT" />
           </Logo>
         </styled.MainTitle>
         <styled.TextFieldWithButton>
@@ -47,8 +47,10 @@ export default function Header() {
           </PrimaryButton>
         </styled.TextFieldWithButton>
         <ButtonLikeLink href="/publish-lp">
-          <span className="mobile-short-label">Publier</span>
-          <span className="desktop-long-label">Publier un Lp</span>
+        <ResponsiveLabel
+            mobileLabel="Publier"
+            desktopLabel="Publier une annonce"
+          />
         </ButtonLikeLink>
       </styled.MainMenu>
       <styled.CategoriesNavigation>

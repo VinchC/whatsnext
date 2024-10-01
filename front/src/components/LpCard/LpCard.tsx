@@ -14,18 +14,15 @@ export default function LpCard({
 }) {
   return (
     <>
-    <styled.Container>
-      <BaseLink className="lp-card-link" href={`/lps/${id}`}>
-        <styled.Image
-          className="lp-card-image"
-          src={`/images/${id}.webp`}
-        />
-        <styled.Text>
-          <styled.Title>{title}</styled.Title>
-          <styled.Price>{price} €</styled.Price>
-        </styled.Text>
-      </BaseLink>
-    </styled.Container>
+      <styled.Container>
+        <BaseLink href={`/lps/${id}`}>
+          <styled.Image src={`/images/${id}.webp`} />
+          <styled.Text>
+            <styled.Title>{title}</styled.Title>
+            <styled.Price>{price} €</styled.Price>
+          </styled.Text>
+        </BaseLink>
+      </styled.Container>
     </>
   );
 }

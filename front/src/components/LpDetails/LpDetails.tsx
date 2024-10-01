@@ -1,14 +1,15 @@
 import { ButtonLikeLink } from "../Link/ButtonLikeLink";
 import { MailIcon } from "../Icons/MailIcon";
 import * as styled from "./LpDetails.styled";
+import { Separator } from "../Separator/Separator";
 
-export default function LpDetails() {
+export default function Container() {
   return (
     <>
       <h2>Table</h2>
       <styled.Container>
         <styled.ImageContainer>
-          <styled.Image className="lp-details-image" src={`/images/1.webp`} />
+          <styled.Image src={`/images/1.webp`} />
         </styled.ImageContainer>
         <styled.Info>
           <styled.Price>120 €</styled.Price>
@@ -18,7 +19,7 @@ export default function LpDetails() {
             adipisci, aliquam nulla unde quam architecto eligendi, voluptatum,
             perspiciatis laudantium sed eos voluptates?
           </div>
-          <hr className="separator" />
+          <Separator />
           <div>
             Annoncée publiée par <b>Pops</b> aujourd'hui (15:28).
           </div>
