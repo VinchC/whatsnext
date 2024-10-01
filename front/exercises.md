@@ -1,6 +1,11 @@
 ## Useful commands
+
 - git checkout branch_name
 - git checkout commit_id
+
+## Useful advices
+
+- always consider the highest level of abstraction possible - DRY
 
 ## Front Training - Creation ofs pages and components
 
@@ -13,14 +18,14 @@ From commit cdadafa5545ca78c5cd605aa629a5c8470dff531 :
 
 From commit 38caf161e838d04d767569d89e3c0799b1338bd9 :
 
-- a LpCard component
-
+- a LpCard component and /lps route
 
 In front_continued :
 From commit bb222f057218c190bf80e7caa48ee6f4f3151322
 
-- a Layout component with a Header subcomponent, and children passed in it (\_app > Layout > Header and { children })
+- a Layout component with a Header component, and children passed in it (\_app > Layout > Header and { children })
 
 In front_components :
+From commit f8ef49b95f3ed92f3c0cb161f1be468de706958a
 
--
+- a PrimaryButton component (highest level), a MailIcon and a SearchIcon
