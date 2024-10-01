@@ -1,5 +1,4 @@
 import PrimaryButton from "@/components/PrimaryButton";
-
 export default function PublishLpForm() {
   const createLp = () => {
     // to complete with /post-lp
@@ -36,6 +35,10 @@ export default function PublishLpForm() {
           <label className="form-label-with-field">
             Artiste
             <input className="text-field" type="email" required />
+          </label>
+          <label className="form-label-with-field">
+            Label
+            <input className="text-field" type="text" />
           </label>
           <PrimaryButton>Créer un lp</PrimaryButton>
         </form>
