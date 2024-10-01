@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import DisplayLinkToCategory from "@/components/DisplayLinkToCategory";
 import Link from "next/link";
-import PrimaryButton from "./PrimaryButton";
+import PrimaryButton from "./Button/PrimaryButton";
 import { SearchIcon } from "@/Icons/SearchIcon";
 
 export default function Header() {

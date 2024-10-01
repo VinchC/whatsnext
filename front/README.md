@@ -3,6 +3,11 @@
 - node --version to check if node is installed and its current version
 - npx create-next-app@latest with default options
 
+## Manage CSS
+Install styled.components with bable plug-in
+- npm i styled-components
+- npm i --save-dev babel-plugin-styled-components
+
 
 
 

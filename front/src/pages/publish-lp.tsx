@@ -1,4 +1,4 @@
-import PrimaryButton from "@/components/PrimaryButton";
+import PrimaryButton from "@/components/Button/PrimaryButton";
 export default function PublishLpForm() {
   const createLp = () => {
     // to complete with /post-lp

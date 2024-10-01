@@ -1,4 +1,4 @@
-import LpCard from "@/components/LpCard";
+import LpCard from "@/components/LpCard/LpCard";
 
 const LPS = [
   {
