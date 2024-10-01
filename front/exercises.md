@@ -29,3 +29,7 @@ In front_components :
 From commit f8ef49b95f3ed92f3c0cb161f1be468de706958a
 
 - a PrimaryButton component (highest level), a MailIcon and a SearchIcon
+
+From commit 14d8de3aecd4a2547d06b1ca2050e1e6e55c7d98
+
+- a publish Lp form with a bit of CSS

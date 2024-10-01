@@ -49,10 +49,10 @@ export default function Header() {
           </form>
 
           {/* route to create a new LP */}
-          <a href="/post-lp" className="button link-button">
+          <Link href="/publish-lp" className="button link-button">
             <span className="mobile-short-label">Publier</span>
             <span className="desktop-long-label">Publier un LP</span>
-          </a>
+          </Link>
         </div>
         {/* navbar with categories implemented directly in file*/}
         <nav className="categories-navigation">

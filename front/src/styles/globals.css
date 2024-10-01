@@ -11,7 +11,8 @@
 
 body {
   margin: 0;
-  font-family: "Tahoma", "Calibri", "Helvetica", "Arial", "Verdana", "Times New Roman", sans-serif;
+  font-family: "Tahoma", "Calibri", "Helvetica", "Arial", "Verdana",
+    "Times New Roman", sans-serif;
   background-color: var(--tertiary-color);
 }
 
@@ -175,4 +176,20 @@ h1 {
   height: 1px;
   background-color: var(--border-color);
   border: none;
+}
+
+.form {
+  display: grid;
+  width: 100%;
+  gap: 16px;
+}
+
+.form-label-with-field {
+  display: grid;
+  width: 100%;
+  gap: 6px;
+}
+
+.text-area {
+  resize: vertical;
 }
