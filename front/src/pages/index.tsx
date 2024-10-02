@@ -2,27 +2,10 @@ import LpCard from "@/components/LpCard/LpCard";
 import { CardGrid } from "@/components/CardGrid/CardGrid";
 import styled from "styled-components";
 import { CheckboxLabel } from "../components/FormElements/CheckBoxLabel/CheckBoxLabel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PrimaryButton } from "@/components/Button/PrimaryButton";
 import { Modal } from "@/components/Modal/Modal.styled";
-
-const LPS = [
-  {
-    id: 1,
-    title: "Black Moon - Enta Da Stage",
-    price: 10,
-  },
-  {
-    id: 2,
-    title: "Dr Dre - The Chronic",
-    price: 20,
-  },
-  {
-    id: 3,
-    title: "Wu-Tang Clan - Enter the Wu-Tang (36 Chambers)",
-    price: 30,
-  },
-];
+import { Article } from "@/types";
 
 const euroToDollarChangeRate = 1.1;
 
@@ -47,6 +30,17 @@ export default function Home() {
     return setOpen(!isModalOpen ? true : false);
   };
 
+  const [articles, setArticles] = useState<Article[] | null>(null);
+
+  useEffect(() => {
+    const fetchLps = async () => {
+      const response = await fetch("/api/lps");
+      const { lps } = (await response.json()) as { lps: Article[] };
+      setArticles(lps);
+    };
+    fetchLps();
+  }, []);
+
   return (
     <>
       <Container>
@@ -60,19 +54,21 @@ export default function Home() {
         <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton>
 
         <CardGrid>
-          {LPS.map((lp) => (
-            <LpCard
-              key={lp.id}
-              id={lp.id}
-              title={lp.title}
-              price={
-                currency === "EURO"
-                  ? lp.price
-                  : lp.price * euroToDollarChangeRate
-              }
-              currency={currency}
-            />
-          ))}
+          {articles
+            ? articles.map((article) => (
+                <LpCard
+                  key={article.id}
+                  id={article.id}
+                  title={article.title}
+                  price={
+                    currency === "EURO"
+                      ? article.price
+                      : article.price * euroToDollarChangeRate
+                  }
+                  currency={currency}
+                />
+              ))
+            : "Chargement des items..."}
         </CardGrid>
 
         {isModalOpen && <Modal>Contenu de la modale</Modal>}

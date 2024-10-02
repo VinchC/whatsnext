@@ -44,4 +44,6 @@ From commit f30e1c6561720533484b2ad0699d9af782d994e7
 - a modal that will display content on home page
 
 In branch back_link_front :
-From commit
+From commit 2dd657c4623eab15ed706a0e38fdcd41da59621f
+
+- a useEffect that will fetch the data from the server (enabling CORS)
