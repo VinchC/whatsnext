@@ -1,5 +1,5 @@
-import Link from "next/link";
 import styled from "styled-components";
+
 export const MainTitle = styled.h1`
   margin: 0;
 `;
@@ -8,16 +8,16 @@ export const Header = styled.header`
   top: 0;
   left: 0;
   right: 0;
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid var(--border-color);
   padding: 10px;
-  background-color: white;
+  background-color: var(--primary-color);
 `;
 export const MainMenu = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  color: #ffa41b;
+  color: var(--secondary-color);
 `;
 export const TextFieldWithButton = styled.form`
   display: flex;

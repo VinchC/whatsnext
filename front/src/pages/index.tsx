@@ -3,6 +3,7 @@ import { CardGrid } from "@/components/CardGrid/CardGrid";
 import styled from "styled-components";
 import { CheckboxLabel } from "../components/FormElements/CheckBoxLabel/CheckBoxLabel";
 import { useState } from "react";
+import { PrimaryButton } from "@/components/Button/PrimaryButton";
 
 const LPS = [
   {
@@ -23,10 +24,14 @@ const LPS = [
 ];
 
 // change rate that will be used if currency is dollar
-const euroToDollarChangeRate = 1.10723;
+const euroToDollarChangeRate = 1.1;
 
-const Checkbox = styled.input`
-  margin: 6px 0 12px;
+const Container = styled.div`
+  display: grid;
+  gap: 12px;
+`;
+const MainContentTitle = styled.h2`
+  margin: 0 0 4px;
 `;
 
 export default function Home() {
@@ -40,13 +45,14 @@ export default function Home() {
 
   return (
     <>
-      <main className="main-content">
-        <h2>Ajouts récents</h2>
+      <Container>
+        <MainContentTitle>Ajouts récents</MainContentTitle>
         {/* front element that will allow to switch currency */}
         <CheckboxLabel>
-          <Checkbox type="checkbox" onChange={toggleCurrency} />
+          <input type="checkbox" onChange={toggleCurrency} />
           Afficher les prix en dollars
         </CheckboxLabel>
+        <PrimaryButton>Afficher la modale</PrimaryButton>
         <CardGrid>
           {LPS.map((lp) => (
             <LpCard
@@ -63,7 +69,7 @@ export default function Home() {
             />
           ))}
         </CardGrid>
-      </main>
+      </Container>
     </>
   );
 }
