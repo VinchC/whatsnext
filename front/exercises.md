@@ -34,7 +34,7 @@ From commit 14d8de3aecd4a2547d06b1ca2050e1e6e55c7d98
 
 - a publish Lp form with a bit of CSS
 
-In branch styles_components :
-From commit 80a337718e6d05bf9714cce2441ae32a048f3115
+In branch more_front_components :
+From commit 09e805fc4c9290d0e49e2092982d6ee25229b786
 
 - a function that toggles currency (Euro <=> Dollar)
