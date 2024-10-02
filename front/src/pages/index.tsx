@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { CheckboxLabel } from "../components/FormElements/CheckBoxLabel/CheckBoxLabel";
 import { useState } from "react";
 import { PrimaryButton } from "@/components/Button/PrimaryButton";
+import { Modal } from "@/components/Modal/Modal.styled";
 
 const LPS = [
   {
@@ -43,16 +44,28 @@ export default function Home() {
     return setCurrency(currency === "EURO" ? "DOLLAR" : "EURO");
   };
 
+  // creates a false state for the modal which is false by default
+  const [isModalOpen, setOpen] = useState(false);
+
+  // creates a function that will toggle the state of the modal (false = closed and true = open)
+  const toggleModal = () => {
+    return setOpen(!isModalOpen ? true : false);
+  };
+
   return (
     <>
       <Container>
         <MainContentTitle>Ajouts récents</MainContentTitle>
+
         {/* front element that will allow to switch currency */}
         <CheckboxLabel>
           <input type="checkbox" onChange={toggleCurrency} />
           Afficher les prix en dollars
         </CheckboxLabel>
-        <PrimaryButton>Afficher la modale</PrimaryButton>
+
+        {/* front element that will allow to open or close modal*/}
+        <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton>
+
         <CardGrid>
           {LPS.map((lp) => (
             <LpCard
@@ -69,6 +82,9 @@ export default function Home() {
             />
           ))}
         </CardGrid>
+
+        {/* displays the content of the modal if its state is true */}
+        {isModalOpen && <Modal>Contenu de la modale</Modal>}
       </Container>
     </>
   );
