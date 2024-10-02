@@ -42,3 +42,6 @@ From commit 09e805fc4c9290d0e49e2092982d6ee25229b786
 From commit f30e1c6561720533484b2ad0699d9af782d994e7
 
 - a modal that will display content on home page
+
+In branch back_link_front :
+From commit

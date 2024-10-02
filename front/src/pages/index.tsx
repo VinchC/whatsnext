@@ -24,7 +24,6 @@ const LPS = [
   },
 ];
 
-// change rate that will be used if currency is dollar
 const euroToDollarChangeRate = 1.1;
 
 const Container = styled.div`
@@ -36,18 +35,14 @@ const MainContentTitle = styled.h2`
 `;
 
 export default function Home() {
-  // creates a state which will be used to change currency, default value is "EURO"
   const [currency, setCurrency] = useState<"EURO" | "DOLLAR">("EURO");
 
-  // creates a function that will switch between two currencies
   const toggleCurrency = () => {
     return setCurrency(currency === "EURO" ? "DOLLAR" : "EURO");
   };
 
-  // creates a false state for the modal which is false by default
   const [isModalOpen, setOpen] = useState(false);
 
-  // creates a function that will toggle the state of the modal (false = closed and true = open)
   const toggleModal = () => {
     return setOpen(!isModalOpen ? true : false);
   };
@@ -57,13 +52,11 @@ export default function Home() {
       <Container>
         <MainContentTitle>Ajouts récents</MainContentTitle>
 
-        {/* front element that will allow to switch currency */}
         <CheckboxLabel>
           <input type="checkbox" onChange={toggleCurrency} />
           Afficher les prix en dollars
         </CheckboxLabel>
 
-        {/* front element that will allow to open or close modal*/}
         <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton>
 
         <CardGrid>
@@ -73,17 +66,15 @@ export default function Home() {
               id={lp.id}
               title={lp.title}
               price={
-                // value passed in prop depending on the state
                 currency === "EURO"
                   ? lp.price
                   : lp.price * euroToDollarChangeRate
               }
-              currency={currency} // value passed in props
+              currency={currency}
             />
           ))}
         </CardGrid>
 
-        {/* displays the content of the modal if its state is true */}
         {isModalOpen && <Modal>Contenu de la modale</Modal>}
       </Container>
     </>
