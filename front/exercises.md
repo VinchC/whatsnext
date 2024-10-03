@@ -46,4 +46,10 @@ From commit f30e1c6561720533484b2ad0699d9af782d994e7
 In branch back_link_front :
 From commit 2dd657c4623eab15ed706a0e38fdcd41da59621f
 
-- a useEffect that will fetch the data from the server (enabling CORS)
+- enablig CORS
+
+- a useEffect that will fetch all the items on the index from the server
+
+From commit a4f828ce97a9e712e20f2331fc4eef3fc0f7df97
+
+- a useEffect that will fetch one item on item/:id page from the server

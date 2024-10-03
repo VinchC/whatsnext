@@ -7,7 +7,7 @@ import {
 } from "@/components/FormElements/Input/Input";
 import React from "react";
 
-export default function PublishLpForm() {
+export default function PublishLpPage() {
   const createLp = () => {
     // to complete with /post-lp
   };

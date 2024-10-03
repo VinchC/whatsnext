@@ -17,7 +17,7 @@ const MainContentTitle = styled.h2`
   margin: 0 0 4px;
 `;
 
-export default function Home() {
+export default function HomePage() {
   const [currency, setCurrency] = useState<"EURO" | "DOLLAR">("EURO");
 
   const toggleCurrency = () => {

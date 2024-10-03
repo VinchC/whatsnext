@@ -4,22 +4,29 @@ import * as styled from "./LpDetails.styled";
 import { Separator } from "../Separator/Separator";
 import { Article } from "@/types";
 
-export default function Container({ article }: { article: Article }) {
+export default function LpDetails({
+  title,
+  price,
+  description,
+  picture,
+  artist,
+  createdAt,
+}: Article) {
   return (
     <>
-      <h2>Table</h2>
+      <h2>{title}</h2>
       <styled.Container>
         <styled.ImageContainer>
-          <styled.Image src={article?.picture} />
+          <styled.Image src={picture} />
         </styled.ImageContainer>
         <styled.Info>
-          <styled.Price>{article?.price}</styled.Price>
-          <div>{article?.description}</div>
+          <styled.Price>{price} €</styled.Price>
+          <div>{description}</div>
           <Separator />
           <div>
-            Annoncée publiée par <b>{article?.artist}</b> aujourd'hui (15:28).
+            Annoncée publiée par <b>{artist}</b> {createdAt}.
           </div>
-          <ButtonLikeLink href={`mailto:${article?.artist}@${article?.artist}.com`}>
+          <ButtonLikeLink href={`mailto:${artist}@${artist}.com`}>
             <MailIcon />
             Envoyer un email
           </ButtonLikeLink>
