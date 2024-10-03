@@ -23,5 +23,5 @@ export default function Lp() {
     fetchLp();
   }, []);
 
-  return <LpDetails />;
+  return article && <LpDetails article={article} />;
 }
