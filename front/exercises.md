@@ -53,3 +53,7 @@ From commit 2dd657c4623eab15ed706a0e38fdcd41da59621f
 From commit a4f828ce97a9e712e20f2331fc4eef3fc0f7df97
 
 - a useEffect that will fetch one item on item/:id page from the server
+
+From commit 00fe7821b1f99f8a183feb3e95a10881b14e5b49
+
+- a create LP method with the six steps (type, state, update, create, form, and onChange)

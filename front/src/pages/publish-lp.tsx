@@ -5,12 +5,39 @@ import {
   TextArea,
   TextField,
 } from "@/components/FormElements/Input/Input";
-import React from "react";
+import React, { useState } from "react";
+
+type PublishLpFormData = {
+  picture: string;
+  title: string;
+  price: number | null;
+  description: string;
+  artist: string;
+  label: string;
+};
 
 export default function PublishLpPage() {
-  const createLp = () => {
-    // to complete with /post-lp
+  const [formData, setFormData] = useState<PublishLpFormData>({
+    picture: "",
+    title: "",
+    price: null,
+    description: "",
+    artist: "",
+    label: "",
+  });
+
+  const updateFormData = (partialFormData: Partial<PublishLpFormData>) => {
+    return setFormData({ ...formData, ...partialFormData });
   };
+
+  const createLp = async () => {
+    await fetch("/api/lps/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
+  };
+
   return (
     <>
       <Form
@@ -21,27 +48,61 @@ export default function PublishLpPage() {
       >
         <FormLabelWithField>
           Photo
-          <TextField type="file" />
+          <TextField
+            type="file"
+            onChange={(event) => {
+              updateFormData({ picture: event.target.value });
+            }}
+          />
         </FormLabelWithField>
         <FormLabelWithField>
           Titre
-          <TextField type="text" required minLength={4} />
+          <TextField
+            type="text"
+            required
+            minLength={4}
+            onChange={(event) => {
+              updateFormData({ title: event.target.value });
+            }}
+          />
         </FormLabelWithField>
         <FormLabelWithField>
           Prix
-          <TextField type="number" required min={0} />
+          <TextField
+            type="number"
+            required
+            min={0}
+            onChange={(event) => {
+              updateFormData({ price: parseInt(event.target.value) });
+            }}
+          />
         </FormLabelWithField>
         <FormLabelWithField>
           Description
-          <TextArea />
+          <TextArea
+            onChange={(event) => {
+              updateFormData({ description: event.target.value });
+            }}
+          />
         </FormLabelWithField>
         <FormLabelWithField>
           Artiste
-          <TextField type="email" required />
+          <TextField
+            type="email"
+            required
+            onChange={(event) => {
+              updateFormData({ artist: event.target.value });
+            }}
+          />
         </FormLabelWithField>
         <FormLabelWithField>
           Label
-          <TextField type="text" />
+          <TextField
+            type="text"
+            onChange={(event) => {
+              updateFormData({ label: event.target.value });
+            }}
+          />
         </FormLabelWithField>
         <PrimaryButton>Publier l'annonce</PrimaryButton>
       </Form>
