@@ -1,3 +1,4 @@
 INSERT INTO lp (title, description, artist, price, picture, label, createdAt, categoryId) VALUES 
-("Enter The Wu-Tang (36 Chambers)", "Classic East Coast album", "Wu-Tang Clan", 80, "https://en.wikipedia.org/wiki/Enter_the_Wu-Tang_(36_Chambers)#/media/File:Wu-TangClanEntertheWu-Tangalbumcover.jpg", "Loud", "...", 1), 
-("The Chronic", "Classic West Coast album", "Dr Dre", 100, "https://en.wikipedia.org/wiki/The_Chronic#/media/File:Dr.DreTheChronic.jpg", "Death Row", "...", 2);
+("Enter The Wu-Tang (36 Chambers)", "Classic East Coast album", "Wu-Tang Clan", 80, "https://upload.wikimedia.org/wikipedia/en/5/53/Wu-TangClanEntertheWu-Tangalbumcover.jpg", "Loud", "...", 1), 
+("The Chronic", "Classic West Coast album", "Dr Dre", 100, "https://upload.wikimedia.org/wikipedia/en/1/19/Dr.DreTheChronic.jpg", "Death Row", "...", 2),
+("Kind of Blue", "Classic Jazz album", "Miles Davis", 70, "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Kind_of_Blue_%281959%2C_CL_1355%29_album_cover.jpg/1024px-Kind_of_Blue_%281959%2C_CL_1355%29_album_cover.jpg", "Blue Note", "...", 4);

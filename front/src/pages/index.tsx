@@ -37,6 +37,7 @@ export default function Home() {
       const response = await fetch("/api/lps");
       const { lps } = (await response.json()) as { lps: Article[] };
       setArticles(lps);
+      console.log(lps);
     };
     fetchLps();
   }, []);
@@ -59,6 +60,7 @@ export default function Home() {
                 <LpCard
                   key={article.id}
                   id={article.id}
+                  picture={article.picture}
                   title={article.title}
                   price={
                     currency === "EURO"
