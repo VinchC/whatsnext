@@ -2,28 +2,31 @@ import { ButtonLikeLink } from "../Link/ButtonLikeLink";
 import { MailIcon } from "../Icons/MailIcon";
 import * as styled from "./LpDetails.styled";
 import { Separator } from "../Separator/Separator";
+import { Article } from "@/types";
 
-export default function Container() {
+export default function LpDetails({
+  title,
+  price,
+  description,
+  picture,
+  artist,
+  createdAt,
+}: Article) {
   return (
     <>
-      <h2>Table</h2>
+      <h2>{title}</h2>
       <styled.Container>
         <styled.ImageContainer>
-          <styled.Image src={`/images/1.webp`} />
+          <styled.Image src={picture} />
         </styled.ImageContainer>
         <styled.Info>
-          <styled.Price>120 €</styled.Price>
-          <div>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, iusto!
-            Voluptates repudiandae asperiores quia. Blanditiis repellat minima
-            adipisci, aliquam nulla unde quam architecto eligendi, voluptatum,
-            perspiciatis laudantium sed eos voluptates?
-          </div>
+          <styled.Price>{price} €</styled.Price>
+          <div>{description}</div>
           <Separator />
           <div>
-            Annoncée publiée par <b>Pops</b> aujourd'hui (15:28).
+            Annoncée publiée par <b>{artist}</b> {createdAt}.
           </div>
-          <ButtonLikeLink href="mailto:pops@pops.com">
+          <ButtonLikeLink href={`mailto:${artist}@${artist}.com`}>
             <MailIcon />
             Envoyer un email
           </ButtonLikeLink>

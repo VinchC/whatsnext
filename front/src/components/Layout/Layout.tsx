@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           content="What's next a pour but de pratiquer les notions vues pendant la formation (React - GraphQL) et d'en renforcer le caractère accessible."
         />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.png" />
+        <link rel="icon" href="favico.png" />
       </Head>
 
       <Header />

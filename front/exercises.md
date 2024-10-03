@@ -42,3 +42,22 @@ From commit 09e805fc4c9290d0e49e2092982d6ee25229b786
 From commit f30e1c6561720533484b2ad0699d9af782d994e7
 
 - a modal that will display content on home page
+
+In branch back_link_front :
+From commit 2dd657c4623eab15ed706a0e38fdcd41da59621f
+
+- enablig CORS
+
+- a useEffect that will fetch all the items on the index from the server
+
+From commit a4f828ce97a9e712e20f2331fc4eef3fc0f7df97
+
+- a useEffect that will fetch one item on item/:id page from the server
+
+From commit 00fe7821b1f99f8a183feb3e95a10881b14e5b49
+
+- a create LP method with the six steps (type, state, update, create, form, and onChange) and redirection
+
+From commit 6a4c487e30a2d1d4424297f1eda462851aa57ec7
+
+- a publish confirmation message (Alert Box, useRouter, useState for Modal, useEffect return true and Modal)
