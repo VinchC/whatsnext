@@ -5,6 +5,7 @@ import {
   TextArea,
   TextField,
 } from "@/components/FormElements/Input/Input";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 type PublishLpFormData = {
@@ -30,12 +31,20 @@ export default function PublishLpPage() {
     return setFormData({ ...formData, ...partialFormData });
   };
 
+  const router = useRouter();
+
   const createLp = async () => {
-    await fetch("/api/lps/", {
+    const response = await fetch("/api/lps/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     });
+
+    const { lp } = await response.json();
+
+    if (response.ok && lp.id) {
+      router.push(`/lps/${lp.id}`);
+    }
   };
 
   return (

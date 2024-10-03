@@ -4,6 +4,7 @@
 // Fourth create the button that will submit the form
 // Last create the fields of the forms with their respective types
 
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 // first step
@@ -16,13 +17,15 @@ type PublishItemFormData = {
 
 // second step
 export default function CreateDataForm() {
-  const [formData, setFormData] = useState<PublishItemFormData>({
+    const [formData, setFormData] = useState<PublishItemFormData>({
     // precises the type expected for this form, defined above
     // creates a state with empty or null fields when form page loads
     field1: "",
     field2: null,
     field3: "",
   });
+  
+  const router = useRouter(); // useRouter() of Next will allow to implement redirections
 
   // third step
   const updateFormData = (partialFormData: Partial<PublishItemFormData>) => {
@@ -32,13 +35,20 @@ export default function CreateDataForm() {
 
   // fourth step
   const createData = async () => {
-    // creates an async function that will fetch the POST /items route and will send the data in json format
-    await fetch("/api/items", {
+    // creates an async function that will fetch the POST /items route, send the data in json format and get the new item
+    const response = await fetch("/api/items", {
       // fetches the route of items creation ...
       method: "POST", // with the method POST
       headers: { "Content type": "application.json" }, // defines the type of data that will be sent
       body: JSON.stringify(formData), // JSON is an object that provides function to convert JavaScript to and from JSON format
     });
+
+    const { item } = await response.json(); // gets the newly created item with its properties including id
+
+    // the redirection takes place after checking two conditions related to the creation of the item
+    if (response.ok && item.id) {
+      router.push(`/items/${item.id}`);
+    }
   };
 
   return (

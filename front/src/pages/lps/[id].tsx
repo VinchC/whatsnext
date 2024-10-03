@@ -14,13 +14,12 @@ export default function LpPage() {
       // takes and id as a parameter
       const response = await fetch(`/api/lps/${articleId}`); // url address that will be fetched
       const { lp } = (await response.json()) as { lp: Article }; // data and its type that will be fetched from the url
-      console.log(lp);
       setArticle(lp); // updates the state from null with the item fetched
     };
 
     // call to function fetchLp that will actually fetch the data thanks to its id
     if (id) {
-      return fetchLp(id);
+      fetchLp(id);
     }
   }, [id]); // in the array must be defined the paramater used by the inner function
 
