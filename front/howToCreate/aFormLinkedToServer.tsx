@@ -47,7 +47,7 @@ export default function CreateDataForm() {
 
     // the redirection takes place after checking two conditions related to the creation of the item
     if (response.ok && item.id) {
-      router.push(`/items/${item.id}`);
+      router.push(`/items/${item.id}?publishConfirmation=true`);
     }
   };
 

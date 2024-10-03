@@ -57,3 +57,7 @@ From commit a4f828ce97a9e712e20f2331fc4eef3fc0f7df97
 From commit 00fe7821b1f99f8a183feb3e95a10881b14e5b49
 
 - a create LP method with the six steps (type, state, update, create, form, and onChange) and redirection
+
+From commit 6a4c487e30a2d1d4424297f1eda462851aa57ec7
+
+- a publish confirmation message (Alert Box, useRouter, useState for Modal, useEffect return true and Modal)

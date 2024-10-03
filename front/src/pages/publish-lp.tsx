@@ -43,7 +43,7 @@ export default function PublishLpPage() {
     const { lp } = await response.json();
 
     if (response.ok && lp.id) {
-      router.push(`/lps/${lp.id}`);
+      router.push(`/lps/${lp.id}?publishConfirmation=true`); // creates an additional parameter that will allow the confirmation message to be displayed after creation
     }
   };
 
