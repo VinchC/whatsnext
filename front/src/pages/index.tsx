@@ -67,6 +67,7 @@ export default function Home() {
                       ? article.price
                       : article.price * euroToDollarChangeRate
                   }
+                  category={article.category.title}
                   currency={currency}
                 />
               ))

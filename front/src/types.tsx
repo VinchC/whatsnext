@@ -6,5 +6,6 @@ export type Article = {
     picture: string;
     artist: string;
     label: string;
+    category: any;
     createdAt: string;
   };
