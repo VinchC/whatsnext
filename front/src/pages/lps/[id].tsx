@@ -6,6 +6,7 @@ import { Article } from "@/types";
 import Modal from "@/components/Modal/Modal";
 import { PrimaryButton } from "@/components/Button/PrimaryButton";
 import LpDetails from "@/components/LpDetails/LpDetails";
+import Loader from "@/components/Loader/Loader";
 
 const AlertBox = styled.div`
   padding: 8px;
@@ -43,7 +44,7 @@ export default function LpPage() {
   useEffect(() => {
     const fetchLp = async (articleId: string) => {
       const response = await fetch(`/api/lps/${articleId}`);
-      const { lp } = (await response.json()) as { lp: Article }; 
+      const { lp } = (await response.json()) as { lp: Article };
       setArticle(lp);
     };
 
@@ -65,6 +66,6 @@ export default function LpPage() {
       )}
     </>
   ) : (
-    "Chargement de l'article…"
+    <Loader global /> // Loader with global value implemented
   );
 }
