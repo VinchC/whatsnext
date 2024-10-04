@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import * as C from "@/styles/constants";
 
 export const MainTitle = styled.h1`
   margin: 0;
@@ -8,16 +9,16 @@ export const Header = styled.header`
   top: 0;
   left: 0;
   right: 0;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid ${C.BORDER_COLOR};
   padding: 10px;
-  background-color: var(--primary-color);
+  background-color: ${C.PRIMARY_COLOR};
 `;
 export const MainMenu = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  color: var(--secondary-color);
+  color: ${C.SECONDARY_COLOR};
 `;
 export const TextFieldWithButton = styled.form`
   display: flex;
