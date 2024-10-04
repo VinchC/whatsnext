@@ -1,12 +1,19 @@
 import * as styled from "./Loader.styled";
 
-// Loader takes a parameter that has a boolean type and that is false by default
-export default function Loader({ global = false }: { global?: boolean }) {
-  return global ? ( // if global is true, return the global element
-    <styled.GlobalLoaderWrapper>
-      <styled.Loader />
-    </styled.GlobalLoaderWrapper>
-  ) : ( // if false return the local Loader
-    <styled.Loader />
-  );
-}
+export default function Loader({
+    global = false,
+    size = "REGULAR",
+    onBackground = false,
+  }: {
+    global?: boolean;
+    size?: "SMALL" | "REGULAR";
+    onBackground?: boolean;
+  }) {
+    return global ? (
+      <styled.GlobalLoaderWrapper>
+        <styled.Loader $size={size} $onBackground={onBackground} />
+      </styled.GlobalLoaderWrapper>
+    ) : (
+      <styled.Loader $size={size} $onBackground={onBackground} />
+    );
+  }

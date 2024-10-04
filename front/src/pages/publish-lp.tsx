@@ -5,6 +5,9 @@ import {
   TextArea,
   TextField,
 } from "@/components/FormElements/Input/Input";
+import Loader from "@/components/Loader/Loader";
+import { MainContentTitle } from "@/components/MainContentTitle/MainContentTitle";
+import { PageContainer } from "@/components/PageContainer/PageContainer";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
@@ -27,13 +30,18 @@ export default function PublishLpPage() {
     label: "",
   });
 
+  const [submissionStatus, setSubmissionStatus] = useState<
+    "IDLE" | "LOADING" | "ERROR" | "SUCCESS"
+  >("IDLE");
+
+  const router = useRouter();
+
   const updateFormData = (partialFormData: Partial<PublishLpFormData>) => {
     return setFormData({ ...formData, ...partialFormData });
   };
 
-  const router = useRouter();
-
   const createLp = async () => {
+    setSubmissionStatus("LOADING");
     const response = await fetch("/api/lps/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -43,12 +51,17 @@ export default function PublishLpPage() {
     const { lp } = await response.json();
 
     if (response.ok && lp.id) {
+      setSubmissionStatus("SUCCESS");
       router.push(`/lps/${lp.id}?publishConfirmation=true`);
+    } else {
+      setSubmissionStatus("ERROR");
     }
   };
 
   return (
     <>
+        <PageContainer>
+        <MainContentTitle>Publier un Lp</MainContentTitle>
       <Form
         onSubmit={(event) => {
           event.preventDefault();
@@ -113,8 +126,15 @@ export default function PublishLpPage() {
             }}
           />
         </FormLabelWithField>
-        <PrimaryButton>Publier l'annonce</PrimaryButton>
+        <PrimaryButton disabled={submissionStatus === "LOADING"}>
+          {submissionStatus === "LOADING" ? (
+            <Loader size="SMALL" onBackground={true} />
+          ) : (
+            "Publier le Lp"
+          )}
+        </PrimaryButton>
       </Form>
+      </PageContainer>
     </>
   );
 }
