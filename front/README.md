@@ -13,7 +13,9 @@ Install styled.components
 ## Connect front to back
 
 - enable CORS in the next.config.mjs file (reactStrictMode: true, async rewrites, return source and destination)
-- create a useEffect in the index page to fetch the data on the server
+- create a useEffect in the concerned pages to fetch the data on the server
+
+                  ----------------------------------------------------------------------
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
