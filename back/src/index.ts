@@ -22,10 +22,15 @@ const db = new Database("db.sqlite");
 
 app.listen(port, async () => {
   await appDataSource.initialize();
-  await Category.saveNewCategoryIfNotExisting({ title: "East Coast" });
-  await Category.saveNewCategoryIfNotExisting({ title: "West Coast" });
+  await Category.saveNewCategoryIfNotExisting({ title: "Rap US" });
+  await Category.saveNewCategoryIfNotExisting({ title: "Rap FR" });
   await Category.saveNewCategoryIfNotExisting({ title: "Classique" });
   await Category.saveNewCategoryIfNotExisting({ title: "Jazz" });
+  await Category.saveNewCategoryIfNotExisting({ title: "Blues" });
+  await Category.saveNewCategoryIfNotExisting({ title: "Metal" });
+  await Category.saveNewCategoryIfNotExisting({ title: "Soul" });
+  await Category.saveNewCategoryIfNotExisting({ title: "Rock" });
+  await Category.saveNewCategoryIfNotExisting({ title: "Electro" });
   console.log(`Server is listening on port ${port}`);
 });
 

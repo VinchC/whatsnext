@@ -38,7 +38,6 @@ export default function HomePage() {
       const response = await fetch("/api/lps");
       const { lps } = (await response.json()) as { lps: Article[] };
       setArticles(lps);
-      console.log(lps);
     };
     fetchLps();
   }, []);

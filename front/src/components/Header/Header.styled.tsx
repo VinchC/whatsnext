@@ -33,7 +33,7 @@ export const CategoriesNavigation = styled.nav`
   color: #666;
   padding: 16px 10px 6px;
   white-space: nowrap;
-  overflow-x: scroll;
+  // overflow-x: scroll;
   @media screen and (min-width: 720px) {
     padding-top: 14px;
     display: flex;
