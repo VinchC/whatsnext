@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { PrimaryButton } from "@/components/Button/PrimaryButton";
 import { Modal } from "@/components/Modal/Modal.styled";
 import { Article } from "@/types";
-import { Loader } from "@/components/Loader/Loader.styled";
+import Loader from "@/components/Loader/Loader";
 import { MainContentTitle } from "../components/MainContentTitle/MainContentTitle";
 import { PageContainer } from "../components/PageContainer/PageContainer";
 

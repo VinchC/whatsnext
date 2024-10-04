@@ -7,7 +7,7 @@ import { ButtonLikeLink, Logo } from "../Link/ButtonLikeLink";
 import { MainSearchField } from "../FormElements/Input/Input";
 import { BaseLink } from "../Link/BaseLink";
 import ResponsiveLabel from "../ResponsiveLabel/ResponsiveLabel";
-import { Loader } from "../Loader/Loader.styled";
+import Loader from "@/components/Loader/Loader";
 import { Category } from "@/types";
 
 export default function Header() {
@@ -55,7 +55,7 @@ export default function Header() {
             </Fragment>
           ))
         ) : (
-          <Loader />
+          <Loader global />
         )}
       </styled.CategoriesNavigation>
     </styled.Header>
