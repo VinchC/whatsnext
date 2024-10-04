@@ -1,7 +1,10 @@
 import styled from "styled-components";
+import * as C from "@/styles/constants";
+
 export const ModalContainer = styled.div`
   position: relative;
 `;
+
 export const ModalOverlay = styled.div`
   position: fixed;
   z-index: 2;
@@ -9,14 +12,14 @@ export const ModalOverlay = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  background-color: black;
-  opacity: 0.5;
+  ${C.TRANSPARENT_BACKGROUND}
 `;
+
 export const Modal = styled.div`
   position: absolute;
   z-index: 3;
   border-radius: 4px;
-  background-color: #f5f5f5;
+  background-color: $;
   min-width: 288px;
   max-width: 360px;
   min-height: 256px;

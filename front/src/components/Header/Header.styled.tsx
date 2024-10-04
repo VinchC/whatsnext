@@ -12,6 +12,7 @@ export const Header = styled.header`
   border-bottom: 1px solid ${C.BORDER_COLOR};
   padding: 10px;
   background-color: ${C.PRIMARY_COLOR};
+  z-index: 2;
 `;
 export const MainMenu = styled.div`
   display: flex;

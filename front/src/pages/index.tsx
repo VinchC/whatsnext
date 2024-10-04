@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { PrimaryButton } from "@/components/Button/PrimaryButton";
 import { Modal } from "@/components/Modal/Modal.styled";
 import { Article } from "@/types";
+import { Loader } from "@/components/Loader/Loader.styled";
 
 const euroToDollarChangeRate = 1.1;
 
@@ -55,23 +56,25 @@ export default function HomePage() {
         <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton>
 
         <CardGrid>
-          {articles
-            ? articles.map((article) => (
-                <LpCard
-                  key={article.id}
-                  id={article.id}
-                  picture={article.picture}
-                  title={article.title}
-                  price={
-                    currency === "EURO"
-                      ? article.price
-                      : article.price * euroToDollarChangeRate
-                  }
-                  category={article.category?.title}
-                  currency={currency}
-                />
-              ))
-            : "Chargement des items..."}
+          {articles ? (
+            articles.map((article) => (
+              <LpCard
+                key={article.id}
+                id={article.id}
+                picture={article.picture}
+                title={article.title}
+                price={
+                  currency === "EURO"
+                    ? article.price
+                    : article.price * euroToDollarChangeRate
+                }
+                category={article.category?.title}
+                currency={currency}
+              />
+            ))
+          ) : (
+            <Loader />
+          )}
         </CardGrid>
 
         {isModalOpen && <Modal>Contenu de la modale</Modal>}
