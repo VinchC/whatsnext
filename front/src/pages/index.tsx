@@ -1,22 +1,15 @@
 import LpCard from "@/components/LpCard/LpCard";
 import { CardGrid } from "@/components/CardGrid/CardGrid";
-import styled from "styled-components";
 import { CheckboxLabel } from "../components/FormElements/CheckBoxLabel/CheckBoxLabel";
 import { useEffect, useState } from "react";
 import { PrimaryButton } from "@/components/Button/PrimaryButton";
 import { Modal } from "@/components/Modal/Modal.styled";
 import { Article } from "@/types";
 import { Loader } from "@/components/Loader/Loader.styled";
+import { MainContentTitle } from "../components/MainContentTitle/MainContentTitle";
+import { PageContainer } from "../components/PageContainer/PageContainer";
 
 const euroToDollarChangeRate = 1.1;
-
-const Container = styled.div`
-  display: grid;
-  gap: 12px;
-`;
-const MainContentTitle = styled.h2`
-  margin: 0 0 4px;
-`;
 
 export default function HomePage() {
   const [currency, setCurrency] = useState<"EURO" | "DOLLAR">("EURO");
@@ -44,7 +37,7 @@ export default function HomePage() {
 
   return (
     <>
-      <Container>
+      <PageContainer>
         <MainContentTitle>Ajouts récents</MainContentTitle>
 
         <CheckboxLabel>
@@ -77,7 +70,7 @@ export default function HomePage() {
         </CardGrid>
 
         {isModalOpen && <Modal>Contenu de la modale</Modal>}
-      </Container>
+      </PageContainer>
     </>
   );
 }

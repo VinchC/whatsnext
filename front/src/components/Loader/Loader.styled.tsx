@@ -1,10 +1,15 @@
 import * as C from "@/styles/constants"
 
 import styled from "styled-components";
-export const Loader = styled.div`
-  width: 40px;
-  height: 40px;
-  border: 4px solid ${C.BORDER_COLOR};
+
+export const Loader = styled.div<{
+    $size: "SMALL" | "REGULAR";
+    $onBackground: boolean;
+  }>`
+    width: ${({ $size: size }) => (size === "SMALL" ? 24 : 40)}px;
+    height: ${({ $size: size }) => (size === "SMALL" ? 24 : 40)}px;
+    border: ${({ $size: size }) => (size === "SMALL" ? 3 : 4)}px solid
+      ${({ $onBackground }) => ($onBackground ? C.BACKGROUND_COLOR : C.PRIMARY_COLOR)};
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;

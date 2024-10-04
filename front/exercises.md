@@ -61,3 +61,8 @@ From commit 00fe7821b1f99f8a183feb3e95a10881b14e5b49
 From commit 6a4c487e30a2d1d4424297f1eda462851aa57ec7
 
 - a publish confirmation message (Alert Box, useRouter, useState for Modal, useEffect return true and Modal)
+
+In branch loader_display_sort :
+From commit a60db34c7d6e63edb4d6c4d529dabe413e092cb4
+
+- CSS features implemented
