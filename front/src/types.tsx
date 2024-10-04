@@ -9,3 +9,8 @@ export type Article = {
     category: any;
     createdAt: string;
   };
+
+  export type Category = {
+    id: number;
+    title: string;
+  }
