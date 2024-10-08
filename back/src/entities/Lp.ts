@@ -48,10 +48,12 @@ class Lp extends BaseEntity {
   createdAt!: Date;
 
   @ManyToOne(() => Category, (category) => category.lps, { eager: true })
+  @Field(() => Category)
   category!: Category;
 
   @JoinTable({ name: "lps_tags" })
   @ManyToMany(() => Tag, (tag) => tag.lps, { eager: true })
+  @Field(() => [Tag])
   tags!: Tag[];
 
   constructor(lp?: Partial<Lp>) {
@@ -106,7 +108,10 @@ class Lp extends BaseEntity {
   }
 
   static async getAllLps(categoryId?: number): Promise<Lp[]> {
-    const lps = await Lp.find({ where: { category: { id: categoryId } }, order: { createdAt: "DESC"} });
+    const lps = await Lp.find({
+      where: { category: { id: categoryId } },
+      order: { createdAt: "DESC" },
+    });
 
     return lps;
   }
