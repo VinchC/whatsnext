@@ -10,7 +10,7 @@ import {
 } from "typeorm";
 import Category from "./Category";
 import Tag from "./Tag";
-import { Field, Float, ID, ObjectType } from "type-graphql";
+import { ArgsType, Field, Float, ID, Int, ObjectType } from "type-graphql";
 
 @Entity()
 @ObjectType() // allows the object to have a corresponding part in the GraphQL schema
@@ -87,17 +87,16 @@ class Lp extends BaseEntity {
     }
   }
 
-  static async saveNewLp(
-    lpData: Partial<Lp> & { category?: number; tags?: string[] }
-  ): Promise<Lp> {
+  //updates the method with the CreateLp type and its related fields if necessary
+  static async saveNewLp(lpData: CreateLp): Promise<Lp> {
     const newLp = new Lp(lpData);
-    if (lpData.category) {
-      const category = await Category.getCategoryById(lpData.category);
+    if (lpData.categoryId) {
+      const category = await Category.getCategoryById(lpData.categoryId);
       newLp.category = category;
     }
 
-    if (lpData.tags) {
-      newLp.tags = await Promise.all(lpData.tags.map(Tag.getTagById));
+    if (lpData.tagIds) {
+      newLp.tags = await Promise.all(lpData.tagIds.map(Tag.getTagById));
     }
 
     const savedLp = await newLp.save();
@@ -165,3 +164,31 @@ class Lp extends BaseEntity {
 }
 
 export default Lp;
+
+// defined a CreateLp class that will be used by the entity resolver to create a new item
+@ArgsType()
+export class CreateLp {
+  @Field()
+  title!: string;
+
+  @Field({ nullable: true })
+  description!: string;
+
+  @Field()
+  artist!: string;
+
+  @Field(() => Float, { nullable: true })
+  price!: number;
+
+  @Field({ nullable: true })
+  picture!: string;
+
+  @Field({ nullable: true })
+  label!: string;
+
+  @Field(() => Int)
+  categoryId!: number;
+
+  @Field(() => [String], { nullable: true })
+  tagIds!: string[];
+}
