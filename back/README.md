@@ -34,3 +34,9 @@ npm i reflect-metadata
 change tsconfig:
 - uncomment experimentalDecorators
 - uncomment emitDecoratorMetadata
+
+## Install GraphQL and Apollo Server
+
+npm i graphql
+
+npm i @apollo/server graphql 
