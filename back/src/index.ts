@@ -1,71 +1,44 @@
-import express, { raw, response } from "express";
+import express from "express";
 require("dotenv").config();
-import { Database } from "sqlite3";
 import { DataSource } from "typeorm";
+import "reflect-metadata";
+
 import Lp from "./entities/Lp";
+import { isError } from "./utils";
 import Category from "./entities/Category";
 import Tag from "./entities/Tag";
-import { isError } from "./utils";
 
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
+import { Arg, buildSchema, Mutation, Query, Resolver } from "type-graphql";
 
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
-const typeDefs = `#graphql
-  type Lp {
-    id: ID
-    title: String
-    description: String
-    artist: String
-    price: Float
-    picture: String
-    label: String
+// LpResolver is a class that must list all queries and mutations related to an Lp object
+@Resolver()
+class LpResolver {
+  @Query(() => [Lp])
+  lps(@Arg("category", { nullable: true }) category: number) {
+    return Lp.getAllLps(category ?? undefined);
   }
 
-  # The "Query" type is special: it lists all of the available queries that
-  # clients can execute, along with the return type for each. In this
-  # case, the "books" query returns an array of zero or more Books (defined above).
-  type Query {
-    lps(category: Int): [Lp]
-    
+  @Query(() => Lp)
+  lp() {
+    //...
   }
-`;
-const books = [
-  {
-    title: "The Awakening",
-    author: "Kate Chopin",
-  },
-  {
-    title: "City of Glass",
-    author: "Paul Auster",
-  },
-];
 
-// Resolvers define how to fetch the types defined in your schema.
-// This resolver retrieves books from the "books" array above.
-const resolvers = {
-  Query: {
-    lps: (_: unknown, { category }: { category: number }) => {
-      return Lp.getAllLps(category ?? undefined);
-    },
-  },
-};
+  @Mutation(() => Lp)
+  createLpMutation() {
+    //...
+  }
+}
 
-// The ApolloServer constructor requires two parameters: your schema
-// definition and your set of resolvers.
-const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers,
-});
-
-// Passing an ApolloServer instance to the `startStandaloneServer` function:
-//  1. creates an Express app
-//  2. installs your ApolloServer instance as middleware
-//  3. prepares your app to handle incoming requests
 const startApolloServer = async () => {
-  const { url } = await startStandaloneServer(apolloServer, {
+  // GraphQL schema is created at this step with all the Resolvers
+  const schema = await buildSchema({ resolvers: [LpResolver] });
+
+  // Apollo server is created at this step with the GraphQL schema
+  const server = new ApolloServer({ schema });
+
+  const { url } = await startStandaloneServer(server, {
     listen: { port: 4001 },
   });
   console.log(`🚀  Server ready at: ${url}`);
@@ -83,8 +56,6 @@ const appDataSource = new DataSource({
 const app = express();
 
 const port = process.env.REACT_APP_SERVER_PORT;
-
-const db = new Database("db.sqlite");
 
 app.listen(port, async () => {
   await appDataSource.initialize();

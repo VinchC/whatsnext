@@ -10,31 +10,41 @@ import {
 } from "typeorm";
 import Category from "./Category";
 import Tag from "./Tag";
+import { Field, Float, ID, ObjectType } from "type-graphql";
 
 @Entity()
+@ObjectType() // allows the object to have a corresponding part in the GraphQL schema
 class Lp extends BaseEntity {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn() // ORM decorator
+  @Field(() => ID) // GraphQL decorator
   id!: number;
 
   @Column({ length: 150 })
+  @Field()
   title!: string;
 
   @Column({ default: "" })
+  @Field()
   description!: string;
 
   @Column({ length: 150 })
+  @Field()
   artist!: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true }) // why is it implemented twice ?
+  @Field(() => Float, { nullable: true })
   price!: number;
 
   @Column({ default: "" })
+  @Field()
   picture!: string;
 
   @Column({ length: 150, default: "" })
+  @Field()
   label!: string;
 
   @CreateDateColumn()
+  @Field()
   createdAt!: Date;
 
   @ManyToOne(() => Category, (category) => category.lps, { eager: true })

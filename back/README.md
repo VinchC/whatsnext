@@ -40,3 +40,7 @@ change tsconfig:
 npm i graphql
 
 npm i @apollo/server graphql 
+
+npm i type-graphql
+
+npm i graphql-scalars
