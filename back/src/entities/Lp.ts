@@ -15,9 +15,9 @@ import { Field, Float, ID, ObjectType } from "type-graphql";
 @Entity()
 @ObjectType() // allows the object to have a corresponding part in the GraphQL schema
 class Lp extends BaseEntity {
-  @PrimaryGeneratedColumn() // ORM decorator
+  @PrimaryGeneratedColumn("uuid") // ORM decorator
   @Field(() => ID) // GraphQL decorator
-  id!: number;
+  id!: string;
 
   @Column({ length: 150 })
   @Field()
@@ -88,7 +88,7 @@ class Lp extends BaseEntity {
   }
 
   static async saveNewLp(
-    lpData: Partial<Lp> & { category?: number; tags?: number[] }
+    lpData: Partial<Lp> & { category?: number; tags?: string[] }
   ): Promise<Lp> {
     const newLp = new Lp(lpData);
     if (lpData.category) {
@@ -116,7 +116,7 @@ class Lp extends BaseEntity {
     return lps;
   }
 
-  static async getLpById(id: number): Promise<Lp> {
+  static async getLpById(id: string): Promise<Lp> {
     const lp = await Lp.findOne({
       where: { id },
     });
@@ -128,7 +128,7 @@ class Lp extends BaseEntity {
     return lp;
   }
 
-  static async deleteLp(id: number): Promise<void> {
+  static async deleteLp(id: string): Promise<void> {
     const { affected } = await Lp.delete(id);
 
     if (affected === 0) {
@@ -137,8 +137,8 @@ class Lp extends BaseEntity {
   }
 
   static async updateLp(
-    id: number,
-    partialLp: Partial<Lp> & { category?: number; tags?: number[] }
+    id: string,
+    partialLp: Partial<Lp> & { category?: number; tags?: string[] }
   ): Promise<Lp> {
     const lp = await Lp.getLpById(id);
 
