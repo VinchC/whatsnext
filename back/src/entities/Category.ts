@@ -6,13 +6,13 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import Lp from "./Lp";
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, Int, ObjectType } from "type-graphql";
 
 @Entity()
 @ObjectType()
 class Category extends BaseEntity {
   @PrimaryGeneratedColumn()
-  @Field(() => ID)
+  @Field(() => Int)
   id!: number;
 
   @Column({ unique: true })

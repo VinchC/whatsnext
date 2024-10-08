@@ -137,18 +137,17 @@ class Lp extends BaseEntity {
 
   static async updateLp(
     id: string,
-    partialLp: Partial<Lp> & { category?: number; tags?: string[] }
-  ): Promise<Lp> {
+    partialLp: UpdateLp): Promise<Lp> {
     const lp = await Lp.getLpById(id);
 
     Object.assign(lp, partialLp);
 
-    if (partialLp.category) {
-      await Category.getCategoryById(partialLp.category);
+    if (partialLp.categoryId) {
+      lp.category = await Category.getCategoryById(partialLp.categoryId);
     }
 
-    if (partialLp.tags) {
-      lp.tags = await Promise.all(partialLp.tags.map(Tag.getTagById));
+    if (partialLp.tagIds) {
+      lp.tags = await Promise.all(partialLp.tagIds.map(Tag.getTagById));
     }
 
     await lp.save();
@@ -187,6 +186,34 @@ export class CreateLp {
   label!: string;
 
   @Field(() => Int)
+  categoryId!: number;
+
+  @Field(() => [String], { nullable: true })
+  tagIds!: string[];
+}
+
+// defined a UpdateLp class that will be used by the entity resolver to update partially or not an item
+@ArgsType()
+export class UpdateLp {
+  @Field({ nullable: true }) // all Fields must have the nullable: true characteristic to enable PartialLp upfate
+  title!: string;
+
+  @Field({ nullable: true })
+  description!: string;
+
+  @Field({ nullable: true })
+  artist!: string;
+
+  @Field(() => Float, { nullable: true })
+  price!: number;
+
+  @Field({ nullable: true })
+  picture!: string;
+
+  @Field({ nullable: true })
+  label!: string;
+
+  @Field(() => Int, { nullable: true })
   categoryId!: number;
 
   @Field(() => [String], { nullable: true })
