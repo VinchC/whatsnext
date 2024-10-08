@@ -6,7 +6,7 @@ export default function LpCard({
   picture,
   title,
   price,
-  currency, // add a data and its type below
+  currency = "EURO", 
   category,
 }: {
   id: number;
@@ -14,7 +14,7 @@ export default function LpCard({
   title: string;
   price: number;
   category: string;
-  currency: "EURO" | "DOLLAR"; // add data's type defined in state in the parent component
+  currency?: "EURO" | "DOLLAR";
 }) {
   return (
     <>

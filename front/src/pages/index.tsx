@@ -45,7 +45,7 @@ export default function HomePage() {
           Afficher les prix en dollars
         </CheckboxLabel>
 
-        <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton>
+        {/* <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton> */}
 
         <CardGrid>
           {articles ? (

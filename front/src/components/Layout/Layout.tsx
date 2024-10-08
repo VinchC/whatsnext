@@ -4,6 +4,18 @@ import Head from "next/head";
 import Header from "../Header/Header";
 import { MainContent } from "./Layout.styled";
 
+export const CATEGORIES = [
+  { id: 1, title: "Rap US" },
+  { id: 2, title: "Rap FR" },
+  { id: 3, title: "Classique" },
+  { id: 4, title: "Jazz" },
+  { id: 5, title: "Blues" },
+  { id: 6, title: "Metal" },
+  { id: 7, title: "Soul" },
+  { id: 8, title: "Rock" },
+  { id: 9, title: "Electro" },
+];
+
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <>
