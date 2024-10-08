@@ -80,3 +80,10 @@ From commit a60db34c7d6e63edb4d6c4d529dabe413e092cb4
 From commit ad283adb17b980ab023322af68f6209c9c07aaf1
 
 - fetch items for a specific category (entity method, index method and category/[id] page)
+
+                  ----------------------------------------------------------------------
+
+In branch graphql_server :
+From commit 8e003d30fc02637dac19428aebc5b250cfb535b3
+
+-

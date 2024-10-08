@@ -42,7 +42,6 @@ app.get("/", (req, res) => {
 
 app.get("/lps", async (req, res) => {
   const { query } = req;
-  // takes the optional query as a parameter and gets its category or returns all the items if query is undefined
   const lps = await Lp.getAllLps(
     query.category ? parseInt(query.category as string) : undefined
   );
