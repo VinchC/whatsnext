@@ -76,3 +76,7 @@ In branch loader_display_sort :
 From commit a60db34c7d6e63edb4d6c4d529dabe413e092cb4
 
 - CSS features implemented
+
+From commit ad283adb17b980ab023322af68f6209c9c07aaf1
+
+- fetch items for a specific category (entity method, index method and category/[id] page)
