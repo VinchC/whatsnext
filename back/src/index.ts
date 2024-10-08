@@ -10,26 +10,9 @@ import Tag from "./entities/Tag";
 
 import { ApolloServer } from "@apollo/server";
 import { startStandaloneServer } from "@apollo/server/standalone";
-import { Arg, buildSchema, Mutation, Query, Resolver } from "type-graphql";
+import { buildSchema } from "type-graphql";
 
-// LpResolver is a class that must list all queries and mutations related to an Lp object
-@Resolver()
-class LpResolver {
-  @Query(() => [Lp])
-  lps(@Arg("category", { nullable: true }) category: number) {
-    return Lp.getAllLps(category ?? undefined);
-  }
-
-  @Query(() => Lp)
-  lp() {
-    //...
-  }
-
-  @Mutation(() => Lp)
-  createLpMutation() {
-    //...
-  }
-}
+import { LpResolver } from "./resolvers/LpResolver";
 
 const startApolloServer = async () => {
   // GraphQL schema is created at this step with all the Resolvers
