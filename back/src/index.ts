@@ -79,7 +79,8 @@ app.get("/tags", async (req, res) => {
 });
 
 app.get("/lps/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
+  // the id being now from the string type, parseInt() must be removed for Tag and Lp
+  const id = req.params.id;
 
   try {
     const lp = await Lp.getLpById(id);
@@ -105,7 +106,7 @@ app.get("/categories/:id", async (req, res) => {
 });
 
 app.get("/tags/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
 
   try {
     const tag = await Tag.getTagById(id);
@@ -118,7 +119,7 @@ app.get("/tags/:id", async (req, res) => {
 });
 
 app.delete("/lps/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
 
   try {
     await Lp.deleteLp(id);
@@ -144,7 +145,7 @@ app.delete("/categories/:id", async (req, res) => {
 });
 
 app.delete("/tags/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
 
   try {
     await Tag.deleteTag(id);
@@ -193,7 +194,7 @@ app.post("/tags", async (req, res) => {
 });
 
 app.put("/lps/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
 
   const updatedData = req.body;
 
@@ -222,7 +223,7 @@ app.put("/categories/:id", async (req, res) => {
 });
 
 app.put("/tags/:id", async (req, res) => {
-  const id = parseInt(req.params.id);
+  const id = req.params.id;
   const updatedData = req.body;
 
   try {

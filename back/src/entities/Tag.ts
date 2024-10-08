@@ -11,9 +11,11 @@ import { Field, ID, ObjectType } from "type-graphql";
 @Entity()
 @ObjectType()
 class Tag extends BaseEntity {
-  @PrimaryGeneratedColumn()
+// the use of uuid will conform to GraphQL ID type, which must be a string.
+// It will also prevent a user from guessing the size of our data tables.
+  @PrimaryGeneratedColumn("uuid")
   @Field(() => ID)
-  id!: number;
+  id!: string;
 
   @Column({ unique: true })
   @Field()
@@ -66,7 +68,7 @@ class Tag extends BaseEntity {
     return tags;
   }
 
-  static async getTagById(id: number): Promise<Tag> {
+  static async getTagById(id: string): Promise<Tag> {
     const tag = await Tag.findOneBy({ id });
 
     if (!tag) {
@@ -75,7 +77,7 @@ class Tag extends BaseEntity {
     return tag;
   }
 
-  static async deleteTag(id: number): Promise<void> {
+  static async deleteTag(id: string): Promise<void> {
     const { affected } = await Tag.delete(id);
 
     if (affected === 0) {
@@ -83,7 +85,7 @@ class Tag extends BaseEntity {
     }
   }
 
-  static async updateTag(id: number, partialTag: Partial<Tag>): Promise<Tag> {
+  static async updateTag(id: string, partialTag: Partial<Tag>): Promise<Tag> {
     const tag = await Tag.getTagById(id);
     await Tag.update(id, partialTag);
     await tag.reload();
