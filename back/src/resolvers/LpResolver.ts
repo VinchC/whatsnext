@@ -1,4 +1,4 @@
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import { Arg, ID, Mutation, Query, Resolver } from "type-graphql";
 import Lp from "../entities/Lp";
 
 // LpResolver is a class that must list all queries and mutations related to an Lp object
@@ -10,8 +10,9 @@ export class LpResolver {
   }
 
   @Query(() => Lp)
-  lp() {
-    //...
+  // this query takes an id as parameter which is of ID type-graphql and is linked to the id used by the method function
+  lp(@Arg("id", () => ID) id: string) {
+    return Lp.getLpById(id);
   }
 
   @Mutation(() => Lp)
