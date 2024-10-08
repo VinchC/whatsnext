@@ -95,10 +95,7 @@ class Lp extends BaseEntity {
     return savedLp;
   }
 
-  // allows to look for items optionnally filtered by category, and therefore needs a parameter which will be the category id
   static async getAllLps(categoryId?: number): Promise<Lp[]> {
-    // find items which the category.id is the same categoryId parameter => where
-    // sorts items by creation date = > order
     const lps = await Lp.find({ where: { category: { id: categoryId } }, order: { createdAt: "DESC"} });
 
     return lps;
