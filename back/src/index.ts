@@ -16,13 +16,11 @@ import { LpResolver } from "./resolvers/LpResolver";
 import { TagResolver } from "./resolvers/TagResolver";
 
 const startApolloServer = async () => {
-  // GraphQL schema is created at this step with all the Resolvers
   const schema = await buildSchema({
     resolvers: [LpResolver, TagResolver],
-    validate: true, // enables the use of class-validator to validate the data received when creating or updating an object
+    validate: true, 
   });
 
-  // Apollo server is created at this step with the GraphQL schema
   const server = new ApolloServer({ schema });
 
   const { url } = await startStandaloneServer(server, {
@@ -83,7 +81,6 @@ app.get("/tags", async (req, res) => {
 });
 
 app.get("/lps/:id", async (req, res) => {
-  // the id being now from the string type, parseInt() must be removed for Tag and Lp
   const id = req.params.id;
 
   try {

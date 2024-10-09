@@ -14,15 +14,15 @@ import { ArgsType, Field, Float, ID, Int, ObjectType } from "type-graphql";
 import { IsEmail, Length, Min, MinLength } from "class-validator";
 
 @Entity()
-@ObjectType() // allows the object to have a corresponding part in the GraphQL schema
+@ObjectType()
 class Lp extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid") // ORM decorator
-  @Field(() => ID) // GraphQL decorator
+  @PrimaryGeneratedColumn("uuid")
+  @Field(() => ID)
   id!: string;
 
   @Column()
   @Field()
-  @MinLength(1) // allows to validate the data received
+  @MinLength(1)
   title!: string;
 
   @Column({ default: "" })
@@ -34,7 +34,7 @@ class Lp extends BaseEntity {
   @IsEmail()
   artist!: string;
 
-  @Column({ nullable: true }) // why is it implemented twice ?
+  @Column({ nullable: true })
   @Field(() => Float, { nullable: true })
   @Min(1)
   price!: number;
@@ -92,7 +92,6 @@ class Lp extends BaseEntity {
     }
   }
 
-  //updates the method with the CreateLp type and its related fields if necessary
   static async saveNewLp(lpData: CreateOrUpdateLp): Promise<Lp> {
     const newLp = new Lp(lpData);
     if (lpData.categoryId) {
@@ -132,10 +131,10 @@ class Lp extends BaseEntity {
     return lp;
   }
 
-  static async deleteLp(id: string): Promise<Lp> { // deleteLp now returns a LP
-    const lp = await Lp.getLpById(id); // the item is retrieved by the class method via its id
-    await Lp.delete(id); // calling the model
-    return lp; // returns a lp
+  static async deleteLp(id: string): Promise<Lp> {
+    const lp = await Lp.getLpById(id);
+    await Lp.delete(id);
+    return lp;
   }
 
   static async updateLp(
@@ -167,7 +166,6 @@ class Lp extends BaseEntity {
 
 export default Lp;
 
-// defined a CreateLp class that will be used by the entity resolver to create a new item
 @ArgsType()
 export class CreateOrUpdateLp {
   @Field()
