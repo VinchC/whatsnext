@@ -58,6 +58,18 @@ class Category extends BaseEntity {
     return savedCategory;
   }
 
+  static async initializeCategories(): Promise<void> {
+    await Category.saveNewCategoryIfNotExisting({ id: 1, title: "Rap US" });
+    await Category.saveNewCategoryIfNotExisting({ id: 2, title: "Rap FR" });
+    await Category.saveNewCategoryIfNotExisting({ id: 3, title: "Classique" });
+    await Category.saveNewCategoryIfNotExisting({ id: 4, title: "Jazz" });
+    await Category.saveNewCategoryIfNotExisting({ id: 5, title: "Blues" });
+    await Category.saveNewCategoryIfNotExisting({ id: 6, title: "Metal" });
+    await Category.saveNewCategoryIfNotExisting({ id: 7, title: "Soul" });
+    await Category.saveNewCategoryIfNotExisting({ id: 8, title: "Rock" });
+    await Category.saveNewCategoryIfNotExisting({ id: 9, title: "Electro" });
+  }
+
   private static async getCategoryByTitle(
     title: string
   ): Promise<Category | null> {
