@@ -6,13 +6,14 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import Lp from "./Lp";
-import { Field, ID, ObjectType } from "type-graphql";
+import { ArgsType, Field, ID, ObjectType } from "type-graphql";
+import { MinLength } from "class-validator";
 
 @Entity()
 @ObjectType()
 class Tag extends BaseEntity {
-// the use of uuid will conform to GraphQL ID type, which must be a string.
-// It will also prevent a user from guessing the size of our data tables.
+  // the use of uuid will conform to GraphQL ID type, which must be a string.
+  // It will also prevent a user from guessing the size of our data tables.
   @PrimaryGeneratedColumn("uuid")
   @Field(() => ID)
   id!: string;
@@ -36,7 +37,7 @@ class Tag extends BaseEntity {
     }
   }
 
-  static async saveNewTag(tagData: Partial<Tag>): Promise<Tag> {
+  static async saveNewTag(tagData: CreateOrUpdateTag): Promise<Tag> {
     if (!tagData.title) {
       throw new Error("Tag title must not be empty.");
     }
@@ -54,15 +55,6 @@ class Tag extends BaseEntity {
     return savedTag;
   }
 
-  private static async getTagByTitle(title: string): Promise<Tag | null> {
-    const tag = await Tag.findOneBy({ title });
-    return tag;
-  }
-
-  getStringRepresentation(): string {
-    return `${this.id} - ${this.title}`;
-  }
-
   static async getAllTags(): Promise<Tag[]> {
     const tags = await Tag.find();
     return tags;
@@ -77,20 +69,37 @@ class Tag extends BaseEntity {
     return tag;
   }
 
-  static async deleteTag(id: string): Promise<void> {
-    const { affected } = await Tag.delete(id);
-
-    if (affected === 0) {
-      throw new Error(`Tag with ID ${id} doesn't exist.`);
-    }
+  private static async getTagByTitle(title: string): Promise<Tag | null> {
+    const tag = await Tag.findOneBy({ title });
+    return tag;
   }
 
-  static async updateTag(id: string, partialTag: Partial<Tag>): Promise<Tag> {
+  static async deleteTag(id: string): Promise<Tag> {
+    const tag = await Tag.getTagById(id);
+    await Tag.delete(id);
+    return tag;
+  }
+
+  static async updateTag(
+    id: string,
+    partialTag: CreateOrUpdateTag
+  ): Promise<Tag> {
     const tag = await Tag.getTagById(id);
     await Tag.update(id, partialTag);
     await tag.reload();
     return tag;
   }
+
+  getStringRepresentation(): string {
+    return `${this.id} - ${this.title}`;
+  }
 }
 
 export default Tag;
+
+@ArgsType()
+export class CreateOrUpdateTag {
+  @Field()
+  @MinLength(2)
+  title!: string;
+}
