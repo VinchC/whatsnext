@@ -132,12 +132,10 @@ class Lp extends BaseEntity {
     return lp;
   }
 
-  static async deleteLp(id: string): Promise<void> {
-    const { affected } = await Lp.delete(id);
-
-    if (affected === 0) {
-      throw new Error(`Lp with ID ${id} does not exist.`);
-    }
+  static async deleteLp(id: string): Promise<Lp> { // deleteLp now returns a LP
+    const lp = await Lp.getLpById(id); // the item is retrieved by the class method via its id
+    await Lp.delete(id); // calling the model
+    return lp; // returns a lp
   }
 
   static async updateLp(
