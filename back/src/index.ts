@@ -13,11 +13,12 @@ import { startStandaloneServer } from "@apollo/server/standalone";
 import { buildSchema } from "type-graphql";
 
 import { LpResolver } from "./resolvers/LpResolver";
+import { TagResolver } from "./resolvers/TagResolver";
 
 const startApolloServer = async () => {
   // GraphQL schema is created at this step with all the Resolvers
   const schema = await buildSchema({
-    resolvers: [LpResolver],
+    resolvers: [LpResolver, TagResolver],
     validate: true, // enables the use of class-validator to validate the data received when creating or updating an object
   });
 
