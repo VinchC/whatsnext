@@ -1,5 +1,5 @@
 import { Arg, Args, ID, Mutation, Query, Resolver } from "type-graphql";
-import Lp, { CreateLp, UpdateLp } from "../entities/Lp";
+import Lp, { CreateOrUpdateLp } from "../entities/Lp";
 
 // LpResolver is a class that must list all queries and mutations related to an Lp object
 @Resolver()
@@ -17,13 +17,13 @@ export class LpResolver {
 
   // this mutation takes as a parameter the data of CreateLp type that are defined in the entity
   @Mutation(() => Lp)
-  createLpMutation(@Args() args: CreateLp) {
+  createLpMutation(@Args() args: CreateOrUpdateLp) {
     return Lp.saveNewLp(args);
   }
 
   // this mutation takes two parameters, the first being the id of the item, the second being the data sent
   @Mutation(() => Lp)
-  updateLpMutation(@Arg("id", () => ID) id: string, @Args() args: UpdateLp) {
+  updateLpMutation(@Arg("id", () => ID) id: string, @Args() args: CreateOrUpdateLp) {
     return Lp.updateLp(id, args);
   }
 }
