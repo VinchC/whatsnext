@@ -13,7 +13,7 @@ import { buildSchema } from "type-graphql";
 import { LpResolver } from "./resolvers/LpResolver";
 import { TagResolver } from "./resolvers/TagResolver";
 
-// definition of the datasource 
+// definition of the datasource
 const appDataSource = new DataSource({
   type: "sqlite",
   database: "db.sqlite",
@@ -44,15 +44,7 @@ const startApolloServer = async () => {
   await appDataSource.initialize();
 
   // list of categories created when datasource is initialized
-  await Category.saveNewCategoryIfNotExisting({ id: 1, title: "Rap US" });
-  await Category.saveNewCategoryIfNotExisting({ id: 2, title: "Rap FR" });
-  await Category.saveNewCategoryIfNotExisting({ id: 3, title: "Classique" });
-  await Category.saveNewCategoryIfNotExisting({ id: 4, title: "Jazz" });
-  await Category.saveNewCategoryIfNotExisting({ id: 5, title: "Blues" });
-  await Category.saveNewCategoryIfNotExisting({ id: 6, title: "Metal" });
-  await Category.saveNewCategoryIfNotExisting({ id: 7, title: "Soul" });
-  await Category.saveNewCategoryIfNotExisting({ id: 8, title: "Rock" });
-  await Category.saveNewCategoryIfNotExisting({ id: 9, title: "Electro" });
+  await Category.initializeCategories();
 
   console.log(`🚀  Server ready at: ${url}`);
 };
