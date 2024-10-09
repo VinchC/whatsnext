@@ -16,7 +16,10 @@ import { LpResolver } from "./resolvers/LpResolver";
 
 const startApolloServer = async () => {
   // GraphQL schema is created at this step with all the Resolvers
-  const schema = await buildSchema({ resolvers: [LpResolver] });
+  const schema = await buildSchema({
+    resolvers: [LpResolver],
+    validate: true, // enables the use of class-validator to validate the data received when creating or updating an object
+  });
 
   // Apollo server is created at this step with the GraphQL schema
   const server = new ApolloServer({ schema });

@@ -2,7 +2,6 @@ import LpCard from "@/components/LpCard/LpCard";
 import { CardGrid } from "@/components/CardGrid/CardGrid";
 import { CheckboxLabel } from "../components/FormElements/CheckBoxLabel/CheckBoxLabel";
 import { useEffect, useState } from "react";
-import { PrimaryButton } from "@/components/Button/PrimaryButton";
 import { Modal } from "@/components/Modal/Modal.styled";
 import { Article } from "@/types";
 import Loader from "@/components/Loader/Loader";
@@ -54,6 +53,7 @@ export default function HomePage() {
                 key={article.id}
                 id={article.id}
                 picture={article.picture}
+                artist={article.artist}
                 title={article.title}
                 price={
                   currency === "EURO"
