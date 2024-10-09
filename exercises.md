@@ -84,6 +84,14 @@ From commit ad283adb17b980ab023322af68f6209c9c07aaf1
                   ----------------------------------------------------------------------
 
 In branch graphql_server :
-From commit 8e003d30fc02637dac19428aebc5b250cfb535b3
+From commit 8eb10241b85dd8ce9785d7c6667eff1f4c194adea5
 
--
+- add GraphQL decorators to all entities and class-validators
+
+From commit ac10bd1893f5956c700e670bddbe59fc0ff7a90e
+
+- create a LpResolver with all methods and ArgsType() accordingly
+
+From commit 7729820a1d20be06043b6c77c25e045046c2babd
+
+- create a TagResolver with all methods and ArgsType() accordingly
