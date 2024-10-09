@@ -12,8 +12,6 @@ import { MinLength } from "class-validator";
 @Entity()
 @ObjectType()
 class Tag extends BaseEntity {
-  // the use of uuid will conform to GraphQL ID type, which must be a string.
-  // It will also prevent a user from guessing the size of our data tables.
   @PrimaryGeneratedColumn("uuid")
   @Field(() => ID)
   id!: string;
