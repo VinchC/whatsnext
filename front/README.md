@@ -15,6 +15,15 @@ Install styled.components
 - enable CORS in the next.config.mjs file (reactStrictMode: true, async rewrites, return source and destination)
 - create a useEffect in the concerned pages to fetch the data on the server
 
+## Create Apollo Client
+
+npm i graphql => install GraphQL
+
+npm i @apollo/client => install Apollo Server
+
+- modify the _app file with { ApolloProvider } and createApolloClient()
+
+
                   ----------------------------------------------------------------------
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).

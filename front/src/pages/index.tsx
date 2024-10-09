@@ -7,42 +7,50 @@ import { Article } from "@/types";
 import Loader from "@/components/Loader/Loader";
 import { MainContentTitle } from "../components/MainContentTitle/MainContentTitle";
 import { PageContainer } from "../components/PageContainer/PageContainer";
+import { gql, useQuery } from "@apollo/client";
 
 const euroToDollarChangeRate = 1.1;
 
+// Apollo Client will communicate with Apollo Server via GraphQL queries and mutation like this one
+const GET_LPS_HOME_PAGE = gql`
+  query GetLpsHomePage {
+    lps {
+      id
+      title
+      price
+      artist
+    }
+  }
+`;
+
 export default function HomePage() {
-  const [currency, setCurrency] = useState<"EURO" | "DOLLAR">("EURO");
+  // const [currency, setCurrency] = useState<"EURO" | "DOLLAR">("EURO");
 
-  const toggleCurrency = () => {
-    return setCurrency(currency === "EURO" ? "DOLLAR" : "EURO");
-  };
+  // const toggleCurrency = () => {
+  //   return setCurrency(currency === "EURO" ? "DOLLAR" : "EURO");
+  // };
 
-  const [isModalOpen, setOpen] = useState(false);
+  // const [isModalOpen, setOpen] = useState(false);
 
-  const toggleModal = () => {
-    return setOpen(!isModalOpen ? true : false);
-  };
+  // const toggleModal = () => {
+  //   return setOpen(!isModalOpen ? true : false);
+  // };
 
   const [articles, setArticles] = useState<Article[] | null>(null);
 
-  useEffect(() => {
-    const fetchLps = async () => {
-      const response = await fetch("/api/lps");
-      const { lps } = (await response.json()) as { lps: Article[] };
-      setArticles(lps);
-    };
-    fetchLps();
-  }, []);
+  // GraphQL query defined above is called here thanks to the useQuery hook
+  const { data, loading, error } = useQuery(GET_LPS_HOME_PAGE);
+  console.log({ data, loading, error });
 
   return (
     <>
       <PageContainer>
         <MainContentTitle>Ajouts récents</MainContentTitle>
 
-        <CheckboxLabel>
+        {/* <CheckboxLabel>
           <input type="checkbox" onChange={toggleCurrency} />
           Afficher les prix en dollars
-        </CheckboxLabel>
+        </CheckboxLabel> */}
 
         {/* <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton> */}
 
@@ -56,12 +64,12 @@ export default function HomePage() {
                 artist={article.artist}
                 title={article.title}
                 price={
-                  currency === "EURO"
-                    ? article.price
-                    : article.price * euroToDollarChangeRate
+                  // currency === "EURO" ? 
+                  article.price
+                    // : article.price * euroToDollarChangeRate
                 }
                 category={article.category?.title}
-                currency={currency}
+                // currency={currency}
               />
             ))
           ) : (
@@ -69,7 +77,7 @@ export default function HomePage() {
           )}
         </CardGrid>
 
-        {isModalOpen && <Modal>Contenu de la modale</Modal>}
+        {/* {isModalOpen && <Modal>Contenu de la modale</Modal>} */}
       </PageContainer>
     </>
   );
