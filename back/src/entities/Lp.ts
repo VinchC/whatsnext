@@ -11,6 +11,7 @@ import {
 import Category from "./Category";
 import Tag from "./Tag";
 import { ArgsType, Field, Float, ID, Int, ObjectType } from "type-graphql";
+import { IsEmail, Length, Min, MinLength } from "class-validator";
 
 @Entity()
 @ObjectType() // allows the object to have a corresponding part in the GraphQL schema
@@ -19,28 +20,32 @@ class Lp extends BaseEntity {
   @Field(() => ID) // GraphQL decorator
   id!: string;
 
-  @Column({ length: 150 })
+  @Column()
   @Field()
+  @MinLength(1) // allows to validate the data received
   title!: string;
 
   @Column({ default: "" })
   @Field()
   description!: string;
 
-  @Column({ length: 150 })
+  @Column()
   @Field()
+  @IsEmail()
   artist!: string;
 
   @Column({ nullable: true }) // why is it implemented twice ?
   @Field(() => Float, { nullable: true })
+  @Min(1)
   price!: number;
 
   @Column({ default: "" })
   @Field()
   picture!: string;
 
-  @Column({ length: 150, default: "" })
+  @Column({ default: "" })
   @Field()
+  @Length(1, 150)
   label!: string;
 
   @CreateDateColumn()

@@ -4,6 +4,7 @@ import { BaseLink } from "../Link/BaseLink";
 export default function LpCard({
   id,
   picture,
+  artist,
   title,
   price,
   currency = "EURO", 
@@ -11,6 +12,7 @@ export default function LpCard({
 }: {
   id: number;
   picture: string;
+  artist: string,
   title: string;
   price: number;
   category: string;
@@ -22,7 +24,7 @@ export default function LpCard({
         <BaseLink href={`/lps/${id}`}>
           <styled.Image src={picture} />
           <styled.Text>
-            <styled.Title>{title}</styled.Title>
+            <styled.Title>{artist} - {title}</styled.Title>
             <styled.Price>
               {price} {currency != "EURO" ? "$" : "€"}{" "}
               {/* ternary function that checks the currency value of the item and updates the symbol */}

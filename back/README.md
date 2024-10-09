@@ -37,10 +37,12 @@ change tsconfig:
 
 ## Install GraphQL and Apollo Server
 
-npm i graphql
+npm i graphql => install GraphQL
 
-npm i @apollo/server graphql 
+npm i @apollo/server graphql => install Apollo Server
 
-npm i type-graphql
+npm i type-graphql => enables the use of GraphQL decorators that will allow an entity to have a corresponding part in the GraphQL schema
 
-npm i graphql-scalars
+npm i graphql-scalars => enables the use of data types (Int, String etc)
+
+npm i class-validator => allows use of decorator and non-decorator based validation (Length, IsEmail etc.)
