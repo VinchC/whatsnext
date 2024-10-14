@@ -15,6 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query GetLpsHomePage {\n    lps {\n      id\n      title\n      price\n      artist\n    }\n  }\n": types.GetLpsHomePageDocument,
+    "\n  mutation CreateLpForm(\n    $title: String!\n    $description: String!\n    $artist: String!\n    $price: Float!\n    $picture: String!\n    $label: String!\n    $categoryId: Int!\n  ) {\n    createLp(\n      title: $title\n      description: $description\n      artist: $artist\n      price: $price\n      picture: $picture\n      label: $label\n      categoryId: $categoryId\n    ) {\n      id\n    }\n  }\n": types.CreateLpFormDocument,
 };
 
 /**
@@ -35,6 +36,10 @@ export function graphql(source: string): unknown;
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query GetLpsHomePage {\n    lps {\n      id\n      title\n      price\n      artist\n    }\n  }\n"): (typeof documents)["\n  query GetLpsHomePage {\n    lps {\n      id\n      title\n      price\n      artist\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateLpForm(\n    $title: String!\n    $description: String!\n    $artist: String!\n    $price: Float!\n    $picture: String!\n    $label: String!\n    $categoryId: Int!\n  ) {\n    createLp(\n      title: $title\n      description: $description\n      artist: $artist\n      price: $price\n      picture: $picture\n      label: $label\n      categoryId: $categoryId\n    ) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation CreateLpForm(\n    $title: String!\n    $description: String!\n    $artist: String!\n    $price: Float!\n    $picture: String!\n    $label: String!\n    $categoryId: Int!\n  ) {\n    createLp(\n      title: $title\n      description: $description\n      artist: $artist\n      price: $price\n      picture: $picture\n      label: $label\n      categoryId: $categoryId\n    ) {\n      id\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
