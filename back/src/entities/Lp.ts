@@ -177,7 +177,7 @@ export class CreateOrUpdateLp {
   @Field()
   artist!: string;
 
-  @Field(() => Float, { nullable: true })
+  @Field(() => Float)
   price!: number;
 
   @Field({ nullable: true })
