@@ -4,22 +4,22 @@ import Lp, { CreateOrUpdateLp } from "../entities/Lp";
 @Resolver()
 export class LpResolver {
   @Query(() => [Lp])
-  lpsQuery(@Arg("category", { nullable: true }) category: number) {
+  lps(@Arg("category", { nullable: true }) category: number) {
     return Lp.getAllLps(category ?? undefined);
   }
 
   @Query(() => Lp)
-  lpByIdQuery(@Arg("id", () => ID) id: string) {
+  lpById(@Arg("id", () => ID) id: string) {
     return Lp.getLpById(id);
   }
 
   @Mutation(() => Lp)
-  createLpMutation(@Args() args: CreateOrUpdateLp) {
+  createLp(@Args() args: CreateOrUpdateLp) {
     return Lp.saveNewLp(args);
   }
 
   @Mutation(() => Lp)
-  updateLpMutation(
+  updateLp(
     @Arg("id", () => ID) id: string,
     @Args() args: CreateOrUpdateLp
   ) {
@@ -28,7 +28,7 @@ export class LpResolver {
 
   @Mutation(() => Lp)
   // why is it asynchrone ?
-  async deleteLpMutation(@Arg("id", () => ID) id: string) {
+  async deleteLp(@Arg("id", () => ID) id: string) {
     return Lp.deleteLp(id);
   }
 }
