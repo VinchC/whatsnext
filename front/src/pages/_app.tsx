@@ -9,7 +9,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
-    {/* Apollo Client should be placed at the top level of the app */}
       <ApolloProvider client={client}>
         <Layout>
           <Component {...pageProps} />

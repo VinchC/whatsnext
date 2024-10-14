@@ -12,7 +12,6 @@ import { PrimaryButton } from "@/components/Button/PrimaryButton";
 
 const euroToDollarChangeRate = 1.1;
 
-// Apollo Client will communicate with Apollo Server via GraphQL queries and mutation like this one
 const GET_LPS_HOME_PAGE = gql`
   query GetLpsHomePage {
     lps {

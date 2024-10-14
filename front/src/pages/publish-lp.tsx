@@ -16,12 +16,6 @@ import {
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 
-// step 1 : create the mutation for the schema
-// this mutation replaces the former type PublishArticleFormData
-// mutation will take as parameters the data expected by the form, and their types, to generate the schema
-// il will then call the LpResolver mutation and link the data sent by user with the ones expected by the schema
-// finally it will create en id for the new object
-// it will then generate the new types and mutation to update the schema
 const CREATE_LP_FORM = gql`
   mutation CreateLpForm(
     $title: String!
@@ -46,11 +40,8 @@ const CREATE_LP_FORM = gql`
   }
 `;
 
-// step 2 : update the GraphQL schema with npm run graphql-codegen
 
-// step 3 : update the data type with GraphQL schema
 export default function PublishLpPage() {
-  // data type is now defined by the schema
   const [formData, setFormData] = useState<CreateLpFormMutationVariables>({
     title: "",
     description: "",
@@ -64,23 +55,19 @@ export default function PublishLpPage() {
   const router = useRouter();
 
   const updateFormData = (
-    // data type is now defined by the schema
     partialFormData: Partial<CreateLpFormMutationVariables>
   ) => {
     setFormData({ ...formData, ...partialFormData });
   };
 
-  // step 4 : create a function that will use the data types defined by the schema and take in parameter the mutation defined above
   const [createLpMutation, { loading, error }] = useMutation<
     CreateLpFormMutation,
     CreateLpFormMutationVariables
   >(CREATE_LP_FORM);
 
-  // step 5 : create a function that will be used client-side to send the data to Apollo Server via GraphQL
   const createArticle = async () => {
     try {
       const { data } = await createLpMutation({
-        // the "variables" is a mandatory part
         variables: {
           title: formData.title,
           description: formData.description,
@@ -92,7 +79,6 @@ export default function PublishLpPage() {
         },
       });
 
-      // if data exist and if an id has been returned, redirection
       if (data && data.createLp.id) {
         router.push(`/lps/${data.createLp.id}?publishConfirmation=true`);
       }

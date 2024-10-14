@@ -66,6 +66,6 @@ export default function LpPage() {
       )}
     </>
   ) : (
-    <Loader global /> // Loader with global value implemented
+    <Loader global />
   );
 }
