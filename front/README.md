@@ -15,13 +15,19 @@ Install styled.components
 - enable CORS in the next.config.mjs file (reactStrictMode: true, async rewrites, return source and destination)
 - create a useEffect in the concerned pages to fetch the data on the server
 
-## Create Apollo Client
+## Create Apollo Client and install GraphQL
 
 npm i graphql => install GraphQL
 
 npm i @apollo/client => install Apollo Server
 
 - modify the _app file with { ApolloProvider } and createApolloClient()
+
+npm i @graphql-codegen/cli => generates code from your GraphQL schema and GraphQL operations with a single function call regardless of your environment or code format
+
+create script "graphql-codegen": "graphql-codegen --config graphql-codegen.ts"
+
+npm i -D @graphql-codegen/client-preset => client-preset provides typed GraphQL operations (Query, Mutation and Subscription) by perfectly integrating with your favorite GraphQL clients (with Apollo Client in this project's case)
 
 
                   ----------------------------------------------------------------------
