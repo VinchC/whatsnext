@@ -30,7 +30,7 @@ npm i -D @graphql-codegen/client-preset => client-preset provides typed GraphQL 
 
 create file graphql-codegen.ts => contains the configuration that will link the client and the server
 
-create script "graphql-codegen": "graphql-codegen --config graphql-codegen.ts"
+create script "graphql-codegen": "graphql-codegen --config graphql-codegen.ts" => generates query-specific types for front development
 
                   ----------------------------------------------------------------------
 

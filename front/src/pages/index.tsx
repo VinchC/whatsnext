@@ -2,7 +2,7 @@ import LpCard from "@/components/LpCard/LpCard";
 import { CardGrid } from "@/components/CardGrid/CardGrid";
 import { CheckboxLabel } from "../components/FormElements/CheckBoxLabel/CheckBoxLabel";
 import { useEffect, useState } from "react";
-import { Modal } from "@/components/Modal/Modal.styled";
+import Modal from "@/components/Modal/Modal";
 import Loader from "@/components/Loader/Loader";
 import { GetLpsHomePageQuery } from "@/gql/graphql";
 import { MainContentTitle } from "../components/MainContentTitle/MainContentTitle";
@@ -49,7 +49,7 @@ export default function HomePage() {
           Afficher les prix en dollars
         </CheckboxLabel>
 
-        <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton>
+        {/* <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton> */}
 
         <CardGrid>
           {data?.lps ? (
@@ -74,7 +74,7 @@ export default function HomePage() {
           )}
         </CardGrid>
 
-        {/* {isModalOpen && <Modal>Contenu de la modale</Modal>} */}
+        {isModalOpen && <Modal onClose={toggleModal}>Contenu de la modale</Modal>}
       </PageContainer>
     </>
   );
