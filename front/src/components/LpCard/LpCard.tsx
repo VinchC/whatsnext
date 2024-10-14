@@ -10,7 +10,7 @@ export default function LpCard({
   currency = "EURO", 
   category,
 }: {
-  id: number;
+  id: string;
   picture: string;
   artist: string,
   title: string;
