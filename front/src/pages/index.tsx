@@ -3,11 +3,12 @@ import { CardGrid } from "@/components/CardGrid/CardGrid";
 import { CheckboxLabel } from "../components/FormElements/CheckBoxLabel/CheckBoxLabel";
 import { useEffect, useState } from "react";
 import { Modal } from "@/components/Modal/Modal.styled";
-import { Article } from "@/types";
 import Loader from "@/components/Loader/Loader";
+import { GetLpsHomePageQuery } from "@/gql/graphql";
 import { MainContentTitle } from "../components/MainContentTitle/MainContentTitle";
 import { PageContainer } from "../components/PageContainer/PageContainer";
 import { gql, useQuery } from "@apollo/client";
+import { PrimaryButton } from "@/components/Button/PrimaryButton";
 
 const euroToDollarChangeRate = 1.1;
 
@@ -24,39 +25,35 @@ const GET_LPS_HOME_PAGE = gql`
 `;
 
 export default function HomePage() {
-  // const [currency, setCurrency] = useState<"EURO" | "DOLLAR">("EURO");
+  const [currency, setCurrency] = useState<"EURO" | "DOLLAR">("EURO");
 
-  // const toggleCurrency = () => {
-  //   return setCurrency(currency === "EURO" ? "DOLLAR" : "EURO");
-  // };
+  const toggleCurrency = () => {
+    return setCurrency(currency === "EURO" ? "DOLLAR" : "EURO");
+  };
 
-  // const [isModalOpen, setOpen] = useState(false);
+  const [isModalOpen, setOpen] = useState(false);
 
-  // const toggleModal = () => {
-  //   return setOpen(!isModalOpen ? true : false);
-  // };
+  const toggleModal = () => {
+    return setOpen(!isModalOpen ? true : false);
+  };
 
-  const [articles, setArticles] = useState<Article[] | null>(null);
-
-  // GraphQL query defined above is called here thanks to the useQuery hook
-  const { data, loading, error } = useQuery(GET_LPS_HOME_PAGE);
-  console.log({ data, loading, error });
+  const { data } = useQuery<GetLpsHomePageQuery>(GET_LPS_HOME_PAGE);
 
   return (
     <>
       <PageContainer>
         <MainContentTitle>Ajouts récents</MainContentTitle>
 
-        {/* <CheckboxLabel>
+        <CheckboxLabel>
           <input type="checkbox" onChange={toggleCurrency} />
           Afficher les prix en dollars
-        </CheckboxLabel> */}
+        </CheckboxLabel>
 
-        {/* <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton> */}
+        <PrimaryButton onClick={toggleModal}>Afficher la modale</PrimaryButton>
 
         <CardGrid>
-          {articles ? (
-            articles.map((article) => (
+          {data?.lps ? (
+            data.lps.map((article: any) => (
               <LpCard
                 key={article.id}
                 id={article.id}
@@ -64,16 +61,16 @@ export default function HomePage() {
                 artist={article.artist}
                 title={article.title}
                 price={
-                  // currency === "EURO" ? 
-                  article.price
-                    // : article.price * euroToDollarChangeRate
+                  currency === "EURO"
+                    ? article.price
+                    : article.price * euroToDollarChangeRate
                 }
                 category={article.category?.title}
-                // currency={currency}
+                currency={currency}
               />
             ))
           ) : (
-            <Loader />
+            <Loader global />
           )}
         </CardGrid>
 

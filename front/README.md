@@ -25,10 +25,12 @@ npm i @apollo/client => install Apollo Server
 
 npm i @graphql-codegen/cli => generates code from your GraphQL schema and GraphQL operations with a single function call regardless of your environment or code format
 
-create script "graphql-codegen": "graphql-codegen --config graphql-codegen.ts"
 
 npm i -D @graphql-codegen/client-preset => client-preset provides typed GraphQL operations (Query, Mutation and Subscription) by perfectly integrating with your favorite GraphQL clients (with Apollo Client in this project's case)
 
+create file graphql-codegen.ts => contains the configuration that will link the client and the server
+
+create script "graphql-codegen": "graphql-codegen --config graphql-codegen.ts"
 
                   ----------------------------------------------------------------------
 

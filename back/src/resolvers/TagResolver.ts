@@ -4,30 +4,27 @@ import Tag, { CreateOrUpdateTag } from "../entities/Tag";
 @Resolver()
 export class TagResolver {
   @Query(() => [Tag])
-  getAllTagsQuery() {
+  tags() {
     return Tag.getAllTags();
   }
 
   @Query(() => Tag)
-  getTagByIdQuery(@Arg("id", () => ID) id: string) {
+  tagById(@Arg("id", () => ID) id: string) {
     return Tag.getTagById(id);
   }
 
   @Mutation(() => Tag)
-  createTagMutation(@Args() args: CreateOrUpdateTag) {
+  createTag(@Args() args: CreateOrUpdateTag) {
     return Tag.saveNewTag(args);
   }
 
   @Mutation(() => Tag)
-  updateTagMutation(
-    @Arg("id", () => ID) id: string,
-    @Args() args: CreateOrUpdateTag
-  ) {
+  updateTag(@Arg("id", () => ID) id: string, @Args() args: CreateOrUpdateTag) {
     return Tag.updateTag(id, args);
   }
 
   @Mutation(() => Tag)
-  async deleteTagMutation(@Arg("id", () => ID) id: string) {
+  async deleteTag(@Arg("id", () => ID) id: string) {
     return Tag.deleteTag(id);
   }
 }
